@@ -53,6 +53,13 @@ export const Cardapio: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const [count, setCount] = useState(1);
+
+  const handleDecrement = () => setCount((prev) => Math.max(prev - 1, 1));
+  const handleIncrement = () => setCount((prev) => prev + 1);
+
+  const handleMiddleClick = () => alert(`Current count: ${count}`);
+
   return (
     <>
       <Wrapper>
@@ -79,7 +86,18 @@ export const Cardapio: React.FC = () => {
                   {selectedItem.description}
                 </Typography>
 
-                <Button onClick={closeModal}>{selectedItem.price}</Button>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Button onClick={handleDecrement} borderRadius="left">
+                    -
+                  </Button>
+                  <Button onClick={handleMiddleClick} isMiddle={true}>
+                    {count.toString()} - R${' '}
+                    {(count * selectedItem.price).toFixed(2)}
+                  </Button>
+                  <Button onClick={handleIncrement} borderRadius="right">
+                    +
+                  </Button>
+                </div>
               </div>
             )}
           </Modal>
