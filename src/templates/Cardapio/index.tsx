@@ -8,6 +8,7 @@ import { ScrollJumpButton } from '../../components/ScrollJumpButton';
 import { Container, ScrollJump, Wrapper } from './styles';
 import { Image } from '../../components/Image';
 import { Button } from '../../components/Button';
+import { Textarea } from '../../components/TextArea';
 
 interface CardProps {
   name: string;
@@ -85,6 +86,8 @@ export const Cardapio: React.FC = () => {
                 <Typography size="small" as="p">
                   {selectedItem.description}
                 </Typography>
+
+                <Textarea placeholder="Observações" />
 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Button onClick={handleDecrement} borderRadius="left">
