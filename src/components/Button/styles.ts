@@ -1,26 +1,41 @@
-import styled, { css } from 'styled-components';
+import styled from "styled-components";
+import { ButtonProps } from ".";
 
-export const Button = styled.button<{
-  disabled?: boolean;
-  variant?: 'primary' | 'secondary';
-}>`
-  ${({ theme, disabled, variant }) => css`
-    padding: 10px 20px;
-    font-size: ${theme.font.sizes.medium};
-    border-radius: ${theme.sizes.radius};
-    cursor: ${disabled ? 'not-allowed' : 'pointer'};
-    background-color: ${variant === 'primary'
-      ? theme.colors.primary
-      : theme.colors.secondaryBg};
-    color: ${theme.colors.white};
-    border: none;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: ${!disabled &&
-      (variant === 'primary'
-        ? theme.colors.primaryHover
-        : theme.colors.secondaryHover)};
+// Estilização do botão com base nas propriedades
+export const StyledButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => !["isMiddle", "borderRadius"].includes(prop)
+})<ButtonProps>`
+  background-color: ${(props) => (props.isMiddle ? "#f0f0f0" : "#f4c242")}; /* Cinza para o meio, amarelo para bordas */
+  color: ${(props) => (props.isMiddle ? "black" : "black")}; /* Cor do texto */
+  border: 1px solid black;
+  border-radius: ${(props) => {
+    switch (props.borderRadius) {
+      case "left":
+        return "20px 0 0 20px";
+      case "right":
+        return "0 20px 20px 0";
+      case "both":
+        return "20px";
+      default:
+        return "0";
     }
-  `}
+  }};
+  padding: 10px 20px;
+  font-size: 16px;
+  flex: ${(props) => (props.isMiddle ? 1 : "none")}; /* Meio ocupa o máximo possível */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${(props) =>
+      props.isMiddle ? "#e6e6e6" : "#ddb12e"}; /* Hover mais claro */
+  }
+
+  &:active {
+    background-color: ${(props) =>
+      props.isMiddle ? "#dcdcdc" : "#c9941f"}; /* Cor ao pressionar */
+  }
 `;

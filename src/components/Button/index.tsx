@@ -1,21 +1,27 @@
-import * as Styled from './styles';
+import { StyledButton } from './styles';
 
-export type ButtonProps = {
+export type BorderRadiusType = 'left' | 'right' | 'both' | 'none';
+
+export interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  disabled?: boolean;
-  variant?: 'primary' | 'secondary';
-};
+  borderRadius?: BorderRadiusType;
+  isMiddle?: boolean;
+}
 
 export const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
-  disabled = false,
-  variant = 'primary',
+  borderRadius = 'none',
+  isMiddle = false,
 }) => {
   return (
-    <Styled.Button onClick={onClick} disabled={disabled} variant={variant}>
+    <StyledButton
+      onClick={onClick}
+      borderRadius={borderRadius}
+      isMiddle={isMiddle}
+    >
       {children}
-    </Styled.Button>
+    </StyledButton>
   );
 };
