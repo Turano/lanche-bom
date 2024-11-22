@@ -7,7 +7,7 @@ export const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 35px;
+  height: 50px;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -15,5 +15,11 @@ export const Button = styled.div`
 
   &:hover {
     color: #555;
+  }
+
+  svg {
+    width: 50%;
+    height: 50%;
+    color: ${({ theme }) => theme.colors.mainBg};
   }
 `;
