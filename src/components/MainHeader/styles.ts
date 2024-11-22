@@ -17,4 +17,5 @@ export const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   box-sizing: border-box;
+  height: fit-content;
 `;
