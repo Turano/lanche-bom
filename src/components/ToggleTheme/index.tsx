@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppThemeContext } from '../../contexts/index';
+import { AppThemeContext } from '../../contexts/AppThemeContext';
 import { SubButton } from '../AccessibilityButton/styles';
 import { FaAdjust } from 'react-icons/fa';
 
