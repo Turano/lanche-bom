@@ -1,15 +1,7 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
-import { DefaultTheme, ThemeProvider } from 'styled-components';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
-
-export type AppThemeContextValues = {
-  theme: DefaultTheme;
-  setTheme?: (mode: 'default' | 'inverted') => void;
-};
-
-export const AppThemeContext = createContext<AppThemeContextValues>({
-  theme,
-});
+import { AppThemeContext, AppThemeContextValues } from './AppThemeContext';
 
 interface AppThemeProviderProps {
   children: React.ReactNode;
