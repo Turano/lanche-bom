@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppThemeContext } from '../../contexts/AppThemeContext';
 import { SubButton } from '../AccessibilityButton/styles';
 import { FaAdjust } from 'react-icons/fa';
+import { AppThemeContext } from '../../contexts';
 
 interface ToggleThemeProps {
   isOpen: boolean;

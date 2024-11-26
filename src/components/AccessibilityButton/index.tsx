@@ -3,6 +3,7 @@ import { FaTimes, FaPlus, FaMinus } from 'react-icons/fa';
 import { MainButton, SubButton, Wrapper } from './styles';
 import { IoAccessibility } from 'react-icons/io5';
 import { ToggleTheme } from '../ToggleTheme';
+
 export const AccessibilityButton = () => {
   const [isOpen, setIsOpen] = useState(false);
 

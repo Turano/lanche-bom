@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { theme } from '../styles/theme';
 import { DefaultTheme } from 'styled-components';
 
 export type AppThemeContextValues = {
@@ -8,5 +7,5 @@ export type AppThemeContextValues = {
 };
 
 export const AppThemeContext = createContext<AppThemeContextValues>({
-  theme,
+  theme: {} as DefaultTheme,
 });

@@ -11,11 +11,11 @@ export const StyledButton = styled.button.withConfig({
   border-radius: ${(props) => {
     switch (props.borderRadius) {
       case "left":
-        return "20px 0 0 20px";
+        return "30px 0 0 30px";
       case "right":
-        return "0 20px 20px 0";
+        return "0 30px 30px 0";
       case "both":
-        return "20px";
+        return "30px";
       default:
         return "0";
     }

@@ -36,7 +36,7 @@ export const Text = styled.p.withConfig({
     !['colorDark', 'size', 'uppercase', 'weight', 'align'].includes(prop),
 })<TypographyProps>`
   ${({ theme, colorDark, size = 'medium', uppercase = false, weight, align }) => css`
-    color: ${colorDark ? theme.colors.darkText : theme.colors.white};
+    color: ${colorDark ? theme.colors.text : theme.colors.white};
     ${textSize[size](theme)};
     ${textTransform(uppercase)};
     ${textWeight(weight)};

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Button = styled.div`
-  background: #ffc100;
+  background: ${({ theme }) => theme.colors.primary};
   border: 1px solid #333;
   cursor: pointer;
   display: flex;
@@ -20,6 +20,6 @@ export const Button = styled.div`
   svg {
     width: 50%;
     height: 50%;
-    color: ${({ theme }) => theme.colors.mainBg};
+    color: ${({ theme }) => theme.colors.text};
   }
 `;

@@ -11,7 +11,7 @@ export const Textarea = styled.textarea<{
     border-radius: ${theme.sizes.radius};
     resize: none;
     background-color: ${disabled ? theme.colors.gray : theme.colors.mainBg};
-    color: ${disabled ? theme.colors.lightGray : theme.colors.darkText};
+    color: ${disabled ? theme.colors.lightGray : theme.colors.text};
 
     &:focus {
       outline: none;

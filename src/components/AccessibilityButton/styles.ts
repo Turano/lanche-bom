@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2000;
 `;
 
 export const MainButton = styled.button`
