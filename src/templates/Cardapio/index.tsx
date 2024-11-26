@@ -10,7 +10,6 @@ import { MockData } from '../../api/mock-data';
 import { Cart } from '../Cart';
 import { useCart } from '../../contexts/cart';
 import { SubHeader } from '../../components/SubHeader';
-import { useNavigate } from 'react-router-dom';
 
 interface CardProps {
   id: number;
@@ -24,8 +23,6 @@ export const Cardapio: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<CardProps | null>(null);
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-
-  const navigate = useNavigate();
 
   const { state } = useCart();
 
