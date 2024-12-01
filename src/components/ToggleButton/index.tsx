@@ -6,7 +6,7 @@ export type ToggleButtonProps = {
   children: React.ReactNode;
   isSelected: boolean;
   borderRadius?: BorderRadiusType;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const ToggleButton: React.FC<ToggleButtonProps> = ({

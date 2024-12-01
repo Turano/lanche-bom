@@ -8,6 +8,8 @@ export type TypographyProps = {
   uppercase?: boolean;
   weight?: 'normal' | 'bold' | 'bolder';
   align?: 'left' | 'center' | 'right' | 'justify';
+  overflow?: 'none' | 'ellipsis';
+  limitLines?: number | 'none';
 };
 
 export const Typography = ({
@@ -18,6 +20,8 @@ export const Typography = ({
   uppercase = false,
   weight = 'normal',
   align = 'left',
+  overflow = 'none',
+  limitLines = 'none',
 }: TypographyProps) => {
   return (
     <Styled.Text
@@ -27,6 +31,8 @@ export const Typography = ({
       uppercase={uppercase}
       weight={weight}
       align={align}
+      overflow={overflow}
+      limitLines={limitLines}
     >
       {children}
     </Styled.Text>

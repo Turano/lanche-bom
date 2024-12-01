@@ -9,22 +9,34 @@ import { MainHeader } from './components/MainHeader/index.tsx';
 import { AccessibilityButton } from './components/AccessibilityButton/index.tsx';
 import { Confirmação } from './templates/Confirmação/index.tsx';
 import { Histórico } from './templates/Histórico/index.tsx';
+import { Cart } from './templates/Cart/index.tsx';
+import { Headers, Wrapper } from './styles.ts';
+import { SubHeader } from './components/SubHeader/index.tsx';
+import { CardapioProvider } from './contexts/cardapio/CardapioProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppThemeProvider>
       <CartProvider>
-        <Router>
-          <MainHeader />
-          <AccessibilityButton />
-          <Routes>
-            <Route path="/" element={<Cardapio />} />
-            <Route path="/pedido" element={<InfosPedido />} />
-            <Route path="/confirmar" element={<Confirmação />} />
-            <Route path="/historico" element={<Histórico />} />
-          </Routes>
-        </Router>
-        <GlobalStyles />
+        <CardapioProvider>
+          <Router>
+            <Headers>
+              <MainHeader />
+              <SubHeader />
+            </Headers>
+            <AccessibilityButton />
+            <Wrapper>
+              <Routes>
+                <Route path="/" element={<Cardapio />} />
+                <Route path="/carrinho" element={<Cart />} />
+                <Route path="/pedido" element={<InfosPedido />} />
+                <Route path="/confirmar" element={<Confirmação />} />
+                <Route path="/historico" element={<Histórico />} />
+              </Routes>
+            </Wrapper>
+          </Router>
+          <GlobalStyles />
+        </CardapioProvider>
       </CartProvider>
     </AppThemeProvider>
   </StrictMode>,

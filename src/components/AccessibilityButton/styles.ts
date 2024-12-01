@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: fixed;
   top: 110px;
-  right: 20px;
+  right: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;

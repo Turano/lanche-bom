@@ -41,3 +41,41 @@ export const StyledButton = styled.button`
   border: none;
   cursor: pointer;
 `;
+
+export const Button = styled.div`
+  background: ${({ theme }) => theme.colors.primary};
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  color: #333;
+
+  &:hover {
+    color: #555;
+  }
+
+  svg {
+    width: 50%;
+    height: 50%;
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;
+
+export const ScrollJump = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+`;

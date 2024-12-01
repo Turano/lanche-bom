@@ -35,12 +35,38 @@ export const Text = styled.p.withConfig({
   shouldForwardProp: (prop) =>
     !['colorDark', 'size', 'uppercase', 'weight', 'align'].includes(prop),
 })<TypographyProps>`
-  ${({ theme, colorDark, size = 'medium', uppercase = false, weight, align }) => css`
+  ${({
+    theme,
+    colorDark,
+    size = 'medium',
+    uppercase = false,
+    weight,
+    align,
+    limitLines,
+    overflow,
+  }) => css`
     color: ${colorDark ? theme.colors.text : theme.colors.white};
     ${textSize[size](theme)};
     ${textTransform(uppercase)};
     ${textWeight(weight)};
     ${textAlignment(align)};
+    ${
+      limitLines === 'none'
+        ? ''
+        : css`
+      display: -webkit-box;
+      -webkit-line-clamp: ${limitLines};
+      -webkit-box-orient: vertical;
+    `
+    }
+      ${
+        overflow === 'ellipsis'
+          ? css`
+      overflow: hidden;
+      text-overflow: ellipsis;
+    `
+          : ''
+      };
     line-height: 1.5;
   `}
 `;

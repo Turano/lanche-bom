@@ -17,8 +17,8 @@ export const defaultTheme: DefaultTheme = {
     },
     sizes: {
       xsmall: '1rem',
-      small: '1.6rem',
-      medium: '2.4rem',
+      small: '1.8rem',
+      medium: '2.6rem',
       large: '3.2rem',
       huge: '5.6rem',
     },
@@ -58,8 +58,8 @@ export const invertedTheme: DefaultTheme = {
     },
     sizes: {
       xsmall: '1rem',
-      small: '1.6rem',
-      medium: '2.4rem',
+      small: '1.8rem',
+      medium: '2.6rem',
       large: '3.2rem',
       huge: '5.6rem',
     },

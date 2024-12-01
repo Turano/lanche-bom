@@ -1,20 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../../components/Button';
 import { Image } from '../../components/Image';
 import { Textarea } from '../../components/TextArea';
 import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
+import { useCardapio } from '../../contexts/cardapio/useCardapio';
+import { useSearchParams } from 'react-router-dom';
 
 interface ItemProps {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
   closeModal: () => void;
 }
 
 export const Item = (props: ItemProps) => {
   const { dispatch } = useCart();
+  const { getItemDetails } = useCardapio();
+  const [searchParams] = useSearchParams();
+  const itemId = Number(searchParams.get('itemId'));
+
+  useEffect(() => {
+    if (!itemId) {
+      props.closeModal();
+    }
+  }, [itemId, props]);
+
+  const item = getItemDetails(itemId);
 
   const [count, setCount] = useState(1);
   const [obs, setObs] = useState('');
@@ -26,7 +35,7 @@ export const Item = (props: ItemProps) => {
     dispatch({
       type: 'ADD_TO_CART',
       payload: {
-        id: props.id,
+        id: itemId,
         quantity: count,
         obs: obs,
       },
@@ -38,14 +47,18 @@ export const Item = (props: ItemProps) => {
     setObs(e.target.value);
   };
 
+  if (!item) {
+    return <p>Item não encontrado.</p>;
+  }
+
   return (
     <div>
       <Image src="src/assets/logo.png" alt="placeholder" width="75%" />
       <Typography size="large" as="h2" weight="bold" uppercase align="center">
-        {props.name}
+        {item.name}
       </Typography>
       <Typography size="small" as="p">
-        {props.description}
+        {item.description}
       </Typography>
 
       <Textarea
@@ -59,7 +72,7 @@ export const Item = (props: ItemProps) => {
           -
         </Button>
         <Button onClick={handleAddToCart} isMiddle={true}>
-          {count.toString()} - R$ {(count * props.price).toFixed(2)}
+          {count.toString()} - R$ {(count * item.price).toFixed(2)}
         </Button>
         <Button onClick={handleIncrement} borderRadius="right">
           +

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CloseButton, Content, Overlay } from './styles';
+import { Content, Overlay } from './styles';
 
 interface ModalProps {
   isOpen: boolean;
@@ -12,10 +12,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <Overlay onClick={onClose}>
-      <Content onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onClose}>x</CloseButton>
-        {children}
-      </Content>
+      <Content onClick={(e) => e.stopPropagation()}>{children}</Content>
     </Overlay>
   );
 };

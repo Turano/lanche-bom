@@ -12,3 +12,11 @@ export const ItemContainer = styled.div`
   justify-content: space-between;
   margin: 10px 0;
 `;
+
+export const ButtonContainer = styled.div`
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+`;
+

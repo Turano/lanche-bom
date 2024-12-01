@@ -9,6 +9,7 @@ export interface ButtonProps {
   isMiddle?: boolean;
   type?: 'button' | 'submit';
   form?: string;
+  disabled?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -18,6 +19,7 @@ export const Button: React.FC<ButtonProps> = ({
   isMiddle = false,
   type = 'button',
   form,
+  disabled,
 }) => {
   return (
     <StyledButton
@@ -26,6 +28,7 @@ export const Button: React.FC<ButtonProps> = ({
       isMiddle={isMiddle}
       type={type}
       form={form}
+      disabled={disabled}
     >
       {children}
     </StyledButton>

@@ -9,6 +9,6 @@ export const Image = styled.img<{
     height: ${heigth};
     width: ${width};
     border-radius: ${borderRadius || theme.sizes.radius};
-    border: 1px solid black;
+    border: 2px solid black;
   `}
 `;

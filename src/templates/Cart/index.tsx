@@ -1,11 +1,44 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MockData } from '../../api/mock-data';
 import { Button } from '../../components/Button';
 import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
+import { Card } from '../../components/Card';
+import { ButtonContainer, ButtonGroupContainer } from './styles';
 
 export const Cart = () => {
-  const { state } = useCart();
+  const { state, dispatch } = useCart();
+  const navigate = useNavigate();
+  const { items } = state;
+  console.log(items);
+
+  const handleDecrement = (id: number, quantity: number) => () => {
+    if (quantity === 1) {
+      dispatch({
+        type: 'REMOVE_FROM_CART',
+        payload: id,
+      });
+      return;
+    }
+
+    dispatch({
+      type: 'UPDATE_QUANTITY',
+      payload: {
+        id: id,
+        quantity: quantity - 1,
+      },
+    });
+  };
+
+  const handleIncrement = (id: number, quantity: number) => () => {
+    dispatch({
+      type: 'UPDATE_QUANTITY',
+      payload: {
+        id: id,
+        quantity: quantity + 1,
+      },
+    });
+  };
 
   const total = state.items.reduce((acc, item) => {
     const product = MockData.find((data) => data.id === item.id);
@@ -14,23 +47,42 @@ export const Cart = () => {
 
   return (
     <>
-      <Typography as="h2" size="large" weight="bold" uppercase>
-        Carrinho
+      <Typography as="h2" size="medium" weight="bold">
+        Itens escolhidos
       </Typography>
       {state.items.length ? (
         <>
           {state.items.map((item, index) => {
             const product = MockData.find((data) => data.id === item.id);
-            return (
+            return product ? (
               <div key={index}>
-                <Typography as="p" size="medium">
-                  {item.quantity} {product?.name} - R$ {product?.price}
-                </Typography>
+                <Card
+                  name={product.name}
+                  price={product.price}
+                  description={product.description}
+                />
+                <ButtonGroupContainer>
+                  <Button
+                    borderRadius="left"
+                    onClick={handleDecrement(product.id, item.quantity)}
+                  >
+                    -
+                  </Button>
+                  <Button isMiddle disabled={true}>
+                    {item.quantity}
+                  </Button>
+                  <Button
+                    borderRadius="right"
+                    onClick={handleIncrement(product.id, item.quantity)}
+                  >
+                    +
+                  </Button>
+                </ButtonGroupContainer>
                 <hr />
               </div>
-            );
+            ) : null;
           })}
-          <Typography as="p" size="medium">
+          <Typography as="p" size="medium" weight="bold">
             Total: R$ {total.toFixed(2)}
           </Typography>
         </>
@@ -40,13 +92,17 @@ export const Cart = () => {
         </Typography>
       )}
 
-      <Link to="/pedido">
-        <Button borderRadius="both">
-          <Typography as="p" size="small" weight="bold">
-            Continuar compra
+      <ButtonContainer>
+        <Button
+          borderRadius="both"
+          onClick={() => navigate('/pedido')}
+          disabled={!state.items.length}
+        >
+          <Typography as="p" size="small">
+            Continuar pedido
           </Typography>
         </Button>
-      </Link>
+      </ButtonContainer>
     </>
   );
 };

@@ -4,7 +4,7 @@ export const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 80px;
+  height: 90px;
   cursor: pointer;
   position: relative;
   margin: 10px 5px;
@@ -12,7 +12,7 @@ export const CardContainer = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 export const CardContent = styled.div`

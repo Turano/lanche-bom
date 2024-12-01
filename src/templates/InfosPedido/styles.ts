@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -18,4 +18,4 @@ export const ButtonContainer = styled.div`
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%); /* Centraliza horizontalmente */
-`
+`;

@@ -29,6 +29,7 @@ export const InfosPedido: React.FC = () => {
     });
 
   const navigate = useNavigate();
+  const { dispatch } = useCart();
 
   const onSubmit = (data: FormData) => {
     dispatch({
@@ -38,99 +39,113 @@ export const InfosPedido: React.FC = () => {
     navigate('/confirmar');
   };
 
-  const { dispatch } = useCart();
-
   const tipoEntrega = watch('tipoEntrega');
+  const name = watch('name');
+  const tel = watch('tel');
+  const cep = watch('cep');
+  const rua = watch('rua');
+  const numero = watch('numero');
+  const complemento = watch('complemento');
+
+  const isFormValid =
+    tipoEntrega === 'retirada'
+      ? name && tel
+      : name && tel && cep && rua && numero && complemento;
+
 
   return (
-    <Container>
-      <Typography size="medium" weight="bold">
-        Informações do pedido
-      </Typography>
-      <form id="formPedido" onSubmit={handleSubmit(onSubmit)}>
-        <Input {...register('name', { required: true })}>Nome*</Input>
-        <Input {...register('tel', { required: true })} type="number">
-          Telefone*
-        </Input>
+    <>
+      <Container>
+        <Typography size="medium" weight="bold">
+          Informações do pedido
+        </Typography>
+        <form id="formPedido" onSubmit={handleSubmit(onSubmit)}>
+          <Input {...register('name', { required: true })}>Nome*</Input>
+          <Input {...register('tel', { required: true })} type="number">
+            Telefone*
+          </Input>
 
-        <ToggleButtonContainer>
-          <Controller
-            name="tipoEntrega"
-            control={control}
-            defaultValue={'retirada'}
-            render={({ field }) => (
-              <>
-                <ToggleButton
-                  isSelected={selected === 'entrega'}
-                  onClick={() => {
-                    setSelected('entrega');
-                    field.onChange('entrega');
-                  }}
-                  borderRadius="left"
-                >
-                  Entrega
-                </ToggleButton>
-                <ToggleButton
-                  isSelected={selected === 'retirada'}
-                  onClick={() => {
-                    setSelected('retirada');
-                    field.onChange('retirada');
-                    setValue('cep', ''); // Limpa os campos ao trocar o tipo
-                    setValue('rua', '');
-                    setValue('numero', '');
-                    setValue('complemento', '');
-                  }}
-                  borderRadius="right"
-                >
-                  Retirada
-                </ToggleButton>
-              </>
-            )}
-          />
-        </ToggleButtonContainer>
-        {selected === 'entrega' && (
-          <>
-            <Input
-              {...register('cep', {
-                validate: (value) =>
-                  tipoEntrega !== 'entrega' || value
-                    ? true
-                    : 'O CEP é obrigatório para entrega',
-              })}
-            >
-              CEP*
-            </Input>
-            <Input
-              {...register('rua', {
-                validate: (value) =>
-                  tipoEntrega !== 'entrega' || value
-                    ? true
-                    : 'A rua é obrigatória para entrega',
-              })}
-            >
-              Rua*
-            </Input>
-            <Input
-              {...register('numero', {
-                validate: (value) =>
-                  tipoEntrega !== 'entrega' || value
-                    ? true
-                    : 'O número é obrigatório para entrega',
-              })}
-            >
-              Número*
-            </Input>
-            <Input {...register('complemento')}>Complemento</Input>
-          </>
-        )}
-        <ButtonContainer>
-          <Button borderRadius="both" type="submit" form="formPedido">
-            <Typography as="span" size="medium" weight="bold">
-              Continuar
-            </Typography>
-          </Button>
-        </ButtonContainer>
-      </form>
-    </Container>
+          <ToggleButtonContainer>
+            <Controller
+              name="tipoEntrega"
+              control={control}
+              defaultValue={'retirada'}
+              render={({ field }) => (
+                <>
+                  <ToggleButton
+                    isSelected={selected === 'entrega'}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelected('entrega');
+                      field.onChange('entrega');
+                    }}
+                    borderRadius="left"
+                  >
+                    Entrega
+                  </ToggleButton>
+                  <ToggleButton
+                    isSelected={selected === 'retirada'}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelected('retirada');
+                      field.onChange('retirada');
+                      setValue('cep', ''); // Limpa os campos ao trocar o tipo
+                      setValue('rua', '');
+                      setValue('numero', '');
+                      setValue('complemento', '');
+                    }}
+                    borderRadius="right"
+                  >
+                    Retirada
+                  </ToggleButton>
+                </>
+              )}
+            />
+          </ToggleButtonContainer>
+          {selected === 'entrega' && (
+            <>
+              <Input
+                {...register('cep', {
+                  validate: (value) =>
+                    tipoEntrega !== 'entrega' || value
+                      ? true
+                      : 'O CEP é obrigatório para entrega',
+                })}
+              >
+                CEP*
+              </Input>
+              <Input
+                {...register('rua', {
+                  validate: (value) =>
+                    tipoEntrega !== 'entrega' || value
+                      ? true
+                      : 'A rua é obrigatória para entrega',
+                })}
+              >
+                Rua*
+              </Input>
+              <Input
+                {...register('numero', {
+                  validate: (value) =>
+                    tipoEntrega !== 'entrega' || value
+                      ? true
+                      : 'O número é obrigatório para entrega',
+                })}
+              >
+                Número*
+              </Input>
+              <Input {...register('complemento')}>Complemento</Input>
+            </>
+          )}
+          <ButtonContainer>
+            <Button borderRadius="both" type="submit" form="formPedido" disabled={!isFormValid}>
+              <Typography as="span" size="small">
+                Continuar
+              </Typography>
+            </Button>
+          </ButtonContainer>
+        </form>
+      </Container>
+    </>
   );
 };

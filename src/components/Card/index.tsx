@@ -28,14 +28,14 @@ export const Card = (props: CardProps) => {
       </ImageContainer>
       <CardContent>
         <CardHeader>
-          <Typography as="h3" size="medium" weight="bold">
+          <Typography as="h3" size="small" weight="bold">
             {props.name}
           </Typography>
           <Typography as="p" size="small" weight="bold">
             R$ {props.price.toFixed(2)}
           </Typography>
         </CardHeader>
-        <Typography as="p" size="small">
+        <Typography as="p" size="small" overflow="ellipsis" limitLines={2}>
           {props.description}
         </Typography>
       </CardContent>

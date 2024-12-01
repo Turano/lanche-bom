@@ -3,14 +3,15 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  height: 100vh;
+  margin: 0 10px;
+  margin-top: 110px;
 `;
 
-export const Container = styled.div`
+export const Headers = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 5px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3000;
 `;

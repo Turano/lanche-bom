@@ -1,7 +1,11 @@
+import { Typography } from '../../components/Typography';
+
 export const Histórico = () => {
   return (
     <div>
-      <h1>Histórico</h1>
+      <Typography as="h3" weight="bold" size="medium">
+        Pedidos
+      </Typography>
     </div>
   );
 };
