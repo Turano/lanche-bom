@@ -4,8 +4,8 @@ import { Image } from '../../components/Image';
 import { Textarea } from '../../components/TextArea';
 import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
-import { useCardapio } from '../../contexts/cardapio/useCardapio';
 import { useSearchParams } from 'react-router-dom';
+import { usePocket } from '../../contexts/api/usePocket';
 
 interface ItemProps {
   closeModal: () => void;
@@ -13,9 +13,9 @@ interface ItemProps {
 
 export const Item = (props: ItemProps) => {
   const { dispatch } = useCart();
-  const { getItemDetails } = useCardapio();
+  const { getCardapio } = usePocket();
   const [searchParams] = useSearchParams();
-  const itemId = Number(searchParams.get('itemId'));
+  const itemId = searchParams.get('itemId');
 
   useEffect(() => {
     if (!itemId) {
@@ -23,7 +23,7 @@ export const Item = (props: ItemProps) => {
     }
   }, [itemId, props]);
 
-  const item = getItemDetails(itemId);
+  const item = getCardapio.data?.find((item) => item.id === itemId);
 
   const [count, setCount] = useState(1);
   const [obs, setObs] = useState('');
@@ -32,14 +32,16 @@ export const Item = (props: ItemProps) => {
   const handleIncrement = () => setCount((prev) => prev + 1);
 
   const handleAddToCart = () => {
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: {
-        id: itemId,
-        quantity: count,
-        obs: obs,
-      },
-    });
+    if (itemId) {
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: {
+          id: itemId,
+          quantity: count,
+          obs: obs,
+        },
+      });
+    }
     props.closeModal();
   };
 

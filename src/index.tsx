@@ -13,31 +13,56 @@ import { Cart } from './templates/Cart/index.tsx';
 import { Headers, Wrapper } from './styles.ts';
 import { SubHeader } from './components/SubHeader/index.tsx';
 import { CardapioProvider } from './contexts/cardapio/CardapioProvider.tsx';
+import { PocketProvider } from './contexts/api/PocketProvider.tsx';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppThemeProvider>
-      <CartProvider>
-        <CardapioProvider>
-          <Router>
-            <Headers>
-              <MainHeader />
-              <SubHeader />
-            </Headers>
-            <AccessibilityButton />
-            <Wrapper>
-              <Routes>
-                <Route path="/" element={<Cardapio />} />
-                <Route path="/carrinho" element={<Cart />} />
-                <Route path="/pedido" element={<InfosPedido />} />
-                <Route path="/confirmar" element={<Confirmação />} />
-                <Route path="/historico" element={<Histórico />} />
-              </Routes>
-            </Wrapper>
-          </Router>
-          <GlobalStyles />
-        </CardapioProvider>
-      </CartProvider>
+      <QueryClientProvider client={queryClient}>
+        <PocketProvider>
+          <CartProvider>
+            <CardapioProvider>
+              <Router>
+                <Headers>
+                  <MainHeader />
+                  <SubHeader />
+                </Headers>
+                <AccessibilityButton />
+                <Wrapper>
+                  <Routes>
+                    <Route path="/" element={<Cardapio />} />
+                    <Route path="/carrinho" element={<Cart />} />
+                    <Route path="/pedido" element={<InfosPedido />} />
+                    <Route path="/confirmar" element={<Confirmação />} />
+                    <Route
+                      path="/historico"
+                      element={
+                        <Histórico
+                          date="19-05-2013"
+                          items={[{ quantity: 2, name: 'teste' }]}
+                          total={10}
+                          status="Em preparo"
+                        />
+                      }
+                    />
+                  </Routes>
+                </Wrapper>
+              </Router>
+              <GlobalStyles />
+            </CardapioProvider>
+          </CartProvider>
+        </PocketProvider>
+      </QueryClientProvider>
     </AppThemeProvider>
   </StrictMode>,
 );

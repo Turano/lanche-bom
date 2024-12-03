@@ -11,8 +11,8 @@ export const Wrapper = styled.div`
 `;
 
 export const MainButton = styled.button`
-  background-color: #8b0000;
-  color: white;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.white};
   border: none;
   border-radius: 50%;
   width: 50px;
@@ -37,12 +37,14 @@ interface SubButtonProps {
 export const SubButton = styled(MainButton).withConfig({
   shouldForwardProp: (prop) => prop !== 'isOpen',
 })<SubButtonProps>`
-  background-color: #8b0000;
+  background-color: ${({ theme }) => theme.colors.secondary};
   width: 45px;
   height: 45px;
   margin: 5px 0;
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(20px)')};
-  transition: all 0.3s ease;
+  position: ${({ isOpen }) => (isOpen ? 'relative' : 'absolute')};
+
+  /** Evitar cliques quando o botão está oculto */
+  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
 `;

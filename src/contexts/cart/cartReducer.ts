@@ -1,11 +1,12 @@
 export type Product = {
-  id: number;
-  obs: string;
+  id: string;
+  obs?: string;
   quantity: number;
 };
 
 export type CartState = {
   items: Product[];
+  userId: string;
   name: string;
   tel: string;
   cep?: string;
@@ -17,8 +18,8 @@ export type CartState = {
 
 export type CartAction =
   | { type: 'ADD_TO_CART'; payload: Product }
-  | { type: 'REMOVE_FROM_CART'; payload: number }
-  | { type: 'UPDATE_QUANTITY'; payload: { id: number; quantity: number } }
+  | { type: 'REMOVE_FROM_CART'; payload: string }
+  | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantity: number } }
   | { type: 'CLEAR_CART' }
   | {
       type: 'SET_INFO';

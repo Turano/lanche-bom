@@ -1,22 +1,47 @@
 import { useNavigate } from 'react-router-dom';
-import { MockData } from '../../api/mock-data';
 import { Button } from '../../components/Button';
 import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
 import { ButtonContainer, Container, ItemContainer } from './styles';
+import { usePocket } from '../../contexts/api/usePocket';
 
 export const Confirmação = () => {
   const { state, dispatch } = useCart();
 
+  const { finalizarPedido, getCardapio } = usePocket();
+
   const navigate = useNavigate();
 
-  const finalizarPedido = () => {
+  const handleFinalizar = async () => {
+    finalizarPedido.mutate(
+      {
+        userId: state.userId,
+        name: state.name,
+        tel: state.tel,
+        cep: state.cep,
+        rua: state.rua,
+        numero: state.numero,
+        complemento: state.complemento,
+        tipoEntrega: state.tipoEntrega,
+        itensSelecionados: state.items,
+        status: 'Em preparo',
+      },
+      {
+        onSuccess: () => {
+          console.log('Pedido finalizado com sucesso!');
+        },
+        onError: (error) => {
+          console.error('Erro ao finalizar o pedido:', error);
+        },
+      },
+    );
+
     dispatch({ type: 'CLEAR_CART' });
     navigate('/historico');
   };
 
   const total = state.items.reduce((acc, item) => {
-    const product = MockData.find((data) => data.id === item.id);
+    const product = getCardapio.data?.find((data) => data.id === item.id);
     return acc + (product ? product.price * item.quantity : 0);
   }, 0);
 
@@ -29,7 +54,9 @@ export const Confirmação = () => {
         <hr />
         <ul>
           {state.items.map((item) => {
-            const product = MockData.find((data) => data.id === item.id);
+            const product = getCardapio.data?.find(
+              (data) => data.id === item.id,
+            );
             return (
               <li key={item.id} style={{ listStyleType: 'none' }}>
                 <ItemContainer>
@@ -57,18 +84,20 @@ export const Confirmação = () => {
           </Typography>
         </ItemContainer>
         <hr />
-        <Typography>Nome: {state.name}</Typography>
-        <Typography>Telefone: {state.tel}</Typography>
+        <Typography size="small">Nome: {state.name}</Typography>
+        <Typography size="small">Telefone: {state.tel}</Typography>
         {state.tipoEntrega === 'retirada' ? null : (
           <>
-            <Typography>CEP: {state.cep}</Typography>
-            <Typography>Rua: {state.rua}</Typography>
-            <Typography>Número: {state.numero}</Typography>
-            <Typography>Complemento: {state.complemento}</Typography>
+            <Typography size="small">CEP: {state.cep}</Typography>
+            <Typography size="small">Rua: {state.rua}</Typography>
+            <Typography size="small">Número: {state.numero}</Typography>
+            <Typography size="small">
+              Complemento: {state.complemento}
+            </Typography>
           </>
         )}
         <ButtonContainer>
-          <Button borderRadius="both" onClick={finalizarPedido}>
+          <Button borderRadius="both" onClick={handleFinalizar}>
             <Typography as="p" size="small">
               Finalizar Pedido
             </Typography>

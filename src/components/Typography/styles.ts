@@ -33,7 +33,14 @@ const textWeight = (weight: TypographyProps['weight']) => css`
 
 export const Text = styled.p.withConfig({
   shouldForwardProp: (prop) =>
-    !['colorDark', 'size', 'uppercase', 'weight', 'align'].includes(prop),
+    ![
+      'colorDark',
+      'size',
+      'uppercase',
+      'weight',
+      'align',
+      'limitLines',
+    ].includes(prop),
 })<TypographyProps>`
   ${({
     theme,

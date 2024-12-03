@@ -5,14 +5,16 @@ import { Modal } from '../../components/Modal';
 import { Container, Wrapper } from './styles';
 import { Item } from '../Item';
 import { CartButton } from '../../components/CartButton';
-import { MockData } from '../../api/mock-data';
 import { useCart } from '../../contexts/cart';
 import { useNavigate } from 'react-router-dom';
+import { usePocket } from '../../contexts/api/usePocket';
 
-const categories = ['Pastel', 'Bebida', 'Hotdog', 'Hamburguer'];
+const categories = ['pastel', 'bebida', 'hotdog', 'hamburguer'];
 
 export const Cardapio: React.FC = () => {
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
+
+  const { getCardapio } = usePocket();
 
   const { state } = useCart();
   const navigate = useNavigate();
@@ -21,7 +23,11 @@ export const Cardapio: React.FC = () => {
     setIsItemModalOpen(false);
   };
 
-  const handleItemClick = (itemId: number) => {
+  const handleItemClick = async (
+    e: React.MouseEvent<HTMLDivElement>,
+    itemId: string,
+  ) => {
+    e.preventDefault();
     setIsItemModalOpen(true);
     navigate(`?itemId=${itemId}`);
   };
@@ -34,23 +40,35 @@ export const Cardapio: React.FC = () => {
     );
   }
 
+  if (getCardapio.isLoading) {
+    return <Typography>Carregando...</Typography>;
+  }
+
+  if (getCardapio.isError) {
+    return <Typography>Erro ao carregar cardápio</Typography>;
+  }
+
+  const items = getCardapio.data || [];
+
   return (
     <>
       <Wrapper>
         <Container>
           {categories.map((category) => {
-            const filteredItems = MockData.filter(
+            const filteredItems = items?.filter(
               (item) => item.category === category,
             );
             return (
-              <>
+              <div key={category} id={category}>
                 <Typography size="large" as="h2" weight="bold" uppercase>
                   {category}
                 </Typography>
-                {filteredItems.map((item, index) => (
+                {filteredItems?.map((item, index) => (
                   <div key={index}>
                     <Card
-                      onClick={() => handleItemClick(item.id)}
+                      onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                        handleItemClick(e, item.id)
+                      }
                       name={item.name}
                       price={item.price}
                       description={item.description}
@@ -58,7 +76,7 @@ export const Cardapio: React.FC = () => {
                     <hr />
                   </div>
                 ))}
-              </>
+              </div>
             );
           })}
         </Container>

@@ -1,18 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { MockData } from '../../api/mock-data';
 import { Button } from '../../components/Button';
 import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
 import { Card } from '../../components/Card';
 import { ButtonContainer, ButtonGroupContainer } from './styles';
+import { usePocket } from '../../contexts/api/usePocket';
 
 export const Cart = () => {
   const { state, dispatch } = useCart();
   const navigate = useNavigate();
-  const { items } = state;
-  console.log(items);
+  const { getCardapio } = usePocket();
 
-  const handleDecrement = (id: number, quantity: number) => () => {
+  const handleDecrement = (id: string, quantity: number) => () => {
     if (quantity === 1) {
       dispatch({
         type: 'REMOVE_FROM_CART',
@@ -30,7 +29,7 @@ export const Cart = () => {
     });
   };
 
-  const handleIncrement = (id: number, quantity: number) => () => {
+  const handleIncrement = (id: string, quantity: number) => () => {
     dispatch({
       type: 'UPDATE_QUANTITY',
       payload: {
@@ -41,7 +40,7 @@ export const Cart = () => {
   };
 
   const total = state.items.reduce((acc, item) => {
-    const product = MockData.find((data) => data.id === item.id);
+    const product = getCardapio.data?.find((data) => data.id === item.id);
     return product ? acc + product.price * item.quantity : acc;
   }, 0);
 
@@ -53,7 +52,9 @@ export const Cart = () => {
       {state.items.length ? (
         <>
           {state.items.map((item, index) => {
-            const product = MockData.find((data) => data.id === item.id);
+            const product = getCardapio.data?.find(
+              (data) => data.id === item.id,
+            );
             return product ? (
               <div key={index}>
                 <Card

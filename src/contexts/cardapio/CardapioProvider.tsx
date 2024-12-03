@@ -1,15 +1,18 @@
 import { useState, ReactNode } from 'react';
-import { CardapioContext, CardapioItem } from './CardapioContext';
-import { MockData } from '../../api/mock-data';
+import { CardapioContext } from './CardapioContext';
+import { Item } from '../../types';
+import { usePocket } from '../api/usePocket';
 
 type Props = {
   children: ReactNode;
 };
 
 export const CardapioProvider = ({ children }: Props) => {
-  const [cardapioItems] = useState<CardapioItem[]>(MockData);
+  const { getCardapio } = usePocket();
 
-  const getItemDetails = (id: number): CardapioItem | undefined => {
+  const [cardapioItems] = useState<Item[]>(getCardapio.data || []);
+
+  const getItemDetails = (id: string): Item | undefined => {
     return cardapioItems.find((item) => item.id === id);
   };
 

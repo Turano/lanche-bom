@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { FaBirthdayCake, FaHamburger, FaHotdog } from 'react-icons/fa';
 import { FaGlassWater } from 'react-icons/fa6';
-import { useCardapio } from '../../contexts/cardapio/useCardapio';
+import { usePocket } from '../../contexts/api/usePocket';
 
 const routes = [
   {
@@ -39,26 +39,27 @@ export const SubHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { getItemDetails } = useCardapio();
-  const [searchParams] = useSearchParams();
-  const itemId = Number(searchParams.get('itemId'));
+  const { getCardapio } = usePocket();
 
-  const item = getItemDetails(itemId);
+  const [searchParams] = useSearchParams();
+  const itemId = searchParams.get('itemId');
+
+  const item = getCardapio.data?.find((item) => item.id === itemId);
 
   if (location.pathname === '/') {
     if (!itemId) {
       return (
         <ScrollJump>
-          <Button onClick={() => navigate('#pastel')}>
+          <Button onClick={() => navigate('#hamburguer')}>
             <FaHamburger />
           </Button>
-          <Button>
+          <Button onClick={() => navigate('#hotdog')}>
             <FaHotdog />
           </Button>
-          <Button>
+          <Button onClick={() => navigate('#bebida')}>
             <FaGlassWater />
           </Button>
-          <Button>
+          <Button onClick={() => navigate('#pastel')}>
             <FaBirthdayCake />
           </Button>
         </ScrollJump>
@@ -70,7 +71,7 @@ export const SubHeader: React.FC = () => {
             <StyledBackIcon />
           </StyledButton>
           <Typography weight="bold" as="h2" align="center" size="medium">
-            {item?.category}
+            {item?.category.toUpperCase()}
           </Typography>
           <div />
         </Container>

@@ -52,13 +52,13 @@ export const InfosPedido: React.FC = () => {
       ? name && tel
       : name && tel && cep && rua && numero && complemento;
 
-
   return (
     <>
       <Container>
         <Typography size="medium" weight="bold">
           Informações do pedido
         </Typography>
+        <div style={{ marginBottom: '2rem' }} />
         <form id="formPedido" onSubmit={handleSubmit(onSubmit)}>
           <Input {...register('name', { required: true })}>Nome*</Input>
           <Input {...register('tel', { required: true })} type="number">
@@ -138,7 +138,12 @@ export const InfosPedido: React.FC = () => {
             </>
           )}
           <ButtonContainer>
-            <Button borderRadius="both" type="submit" form="formPedido" disabled={!isFormValid}>
+            <Button
+              borderRadius="both"
+              type="submit"
+              form="formPedido"
+              disabled={!isFormValid}
+            >
               <Typography as="span" size="small">
                 Continuar
               </Typography>

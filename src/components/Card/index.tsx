@@ -12,17 +12,12 @@ interface CardProps {
   name: string;
   price: number;
   description: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export const Card = (props: CardProps) => {
-  const handleClick = () => {
-    if (props.onClick) {
-      props.onClick();
-    }
-  };
   return (
-    <CardContainer onClick={handleClick}>
+    <CardContainer onClick={props.onClick}>
       <ImageContainer>
         <Image src="src/assets/logo.png" alt="placeholder" height="100%" />
       </ImageContainer>

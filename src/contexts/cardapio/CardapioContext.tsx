@@ -1,16 +1,9 @@
 import { createContext } from 'react';
-
-export type CardapioItem = {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  category: string;
-};
+import { Item } from '../../types';
 
 export type CardapioContextType = {
-  cardapioItems: CardapioItem[];
-  getItemDetails: (id: number) => CardapioItem | undefined;
+  cardapioItems: Item[];
+  getItemDetails: (id: string) => Item | undefined;
 };
 
 export const CardapioContext = createContext<CardapioContextType | undefined>(
