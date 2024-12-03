@@ -4,7 +4,7 @@ import { Info, Item, Pedido, SelectedItem } from '../../types';
 import { PocketContext } from './PocketContext';
 
 // Instância do PocketBase
-const pocketBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const pocketBaseUrl = 'https://lanche-bom.pockethost.io';
 const pb = new PocketBase(pocketBaseUrl);
 
 export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
