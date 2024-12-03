@@ -40,6 +40,7 @@ export const Text = styled.p.withConfig({
       'weight',
       'align',
       'limitLines',
+      'fontSize',
     ].includes(prop),
 })<TypographyProps>`
   ${({
@@ -51,7 +52,9 @@ export const Text = styled.p.withConfig({
     align,
     limitLines,
     overflow,
+    fontSize,
   }) => css`
+    font-size: ${fontSize ? `${fontSize}px` : 'inherit'};
     color: ${colorDark ? theme.colors.text : theme.colors.white};
     ${textSize[size](theme)};
     ${textTransform(uppercase)};
