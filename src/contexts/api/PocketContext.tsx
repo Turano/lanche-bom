@@ -22,6 +22,7 @@ export interface PocketContextProps {
   >;
   getCardapio: UseQueryResult<Item[], Error>;
   useHistorico: (userId: string) => UseQueryResult<Info[], Error>;
+  getLogo: UseQueryResult<string, Error>;
 }
 
 // Contexto vazio, será preenchido pelo `PocketProvider`

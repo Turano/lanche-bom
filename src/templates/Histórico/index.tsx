@@ -1,7 +1,7 @@
 import { Typography } from '../../components/Typography';
 import { usePocket } from '../../contexts/api/usePocket';
 import { useCart } from '../../contexts/cart';
-import { Info, SelectedItem } from '../../types';
+import { Info } from '../../types';
 import { formatDate } from '../../utils/formatDate';
 import {
   HistoryCard,
@@ -11,14 +11,7 @@ import {
   Button,
 } from './styles';
 
-interface OrderProps {
-  date: string;
-  status: 'Em preparo' | 'Finalizado'; // Adicione outros status se necessário
-  items: SelectedItem[];
-  total: number;
-}
-
-export const Histórico: React.FC<OrderProps> = () => {
+export const Histórico: React.FC = () => {
   const { state } = useCart();
 
   const { useHistorico, getCardapio } = usePocket();
@@ -43,8 +36,6 @@ export const Histórico: React.FC<OrderProps> = () => {
     },
     {} as Record<string, Info[]>,
   );
-
-  console.log(groupedItems);
 
   return (
     <div>

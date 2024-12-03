@@ -76,6 +76,14 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
     },
   });
 
+  const getLogo = useQuery<string, Error>({
+    queryKey: 'logo',
+    queryFn: async () => {
+      const config = await pb.collection('config').getFirstListItem('');
+      return pb.files.getURL(config, config.logo);
+    },
+  });
+
   const useHistorico = (userId: string) => {
     return useQuery<Info[], Error>({
       queryKey: ['historico', userId], // Adiciona o userId na queryKey
@@ -92,6 +100,7 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
         finalizarPedido,
         getCardapio,
         useHistorico,
+        getLogo,
       }}
     >
       {children}

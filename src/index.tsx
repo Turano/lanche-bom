@@ -44,17 +44,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="/carrinho" element={<Cart />} />
                     <Route path="/pedido" element={<InfosPedido />} />
                     <Route path="/confirmar" element={<Confirmação />} />
-                    <Route
-                      path="/historico"
-                      element={
-                        <Histórico
-                          date="19-05-2013"
-                          items={[{ quantity: 2, name: 'teste' }]}
-                          total={10}
-                          status="Em preparo"
-                        />
-                      }
-                    />
+                    <Route path="/historico" element={<Histórico />} />
                   </Routes>
                 </Wrapper>
               </Router>
