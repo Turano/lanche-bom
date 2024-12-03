@@ -72,7 +72,11 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
   const getCardapio = useQuery<Item[], Error>({
     queryKey: 'cardapio',
     queryFn: async () => {
-      return await pb.collection('itens').getFullList<Item>();
+      const cardapio = await pb.collection('itens').getFullList<Item>();
+      return cardapio.map((item) => ({
+        ...item,
+        imgUrl: pb.files.getURL(item, item.img),
+      }));
     },
   });
 

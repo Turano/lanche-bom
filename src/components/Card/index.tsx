@@ -13,13 +13,14 @@ interface CardProps {
   price: number;
   description: string;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  imgUrl: string;
 }
 
 export const Card = (props: CardProps) => {
   return (
     <CardContainer onClick={props.onClick}>
       <ImageContainer>
-        <Image src="src/assets/logo.png" alt="placeholder" height="100%" />
+        <Image src={props.imgUrl} alt="placeholder" height="100%" />
       </ImageContainer>
       <CardContent>
         <CardHeader>

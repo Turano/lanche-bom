@@ -48,6 +48,8 @@ export const Cardapio: React.FC = () => {
     return <Typography>Erro ao carregar cardápio</Typography>;
   }
 
+  console.log(getCardapio.data);
+
   const items = getCardapio.data || [];
 
   return (
@@ -72,6 +74,7 @@ export const Cardapio: React.FC = () => {
                       name={item.name}
                       price={item.price}
                       description={item.description}
+                      imgUrl={item.imgUrl}
                     />
                     <hr />
                   </div>

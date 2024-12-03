@@ -55,7 +55,7 @@ export const Item = (props: ItemProps) => {
 
   return (
     <div>
-      <Image src="src/assets/logo.png" alt="placeholder" width="75%" />
+      <Image src={item.imgUrl} alt="placeholder" width="75%" />
       <Typography size="large" as="h2" weight="bold" uppercase align="center">
         {item.name}
       </Typography>

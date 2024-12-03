@@ -4,6 +4,8 @@ export interface Item {
   price: number;
   description: string;
   category: string;
+  img: string;
+  imgUrl: string;
 }
 
 export interface User {

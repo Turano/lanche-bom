@@ -61,6 +61,7 @@ export const Cart = () => {
                   name={product.name}
                   price={product.price}
                   description={product.description}
+                  imgUrl={product.imgUrl}
                 />
                 <ButtonGroupContainer>
                   <Button
