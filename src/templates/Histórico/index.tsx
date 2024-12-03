@@ -76,6 +76,9 @@ export const Histórico: React.FC = () => {
                     .toFixed(2)}
                 </span>
                 <div>
+                  <Button>Cancelar</Button>
+                </div>
+                <div>
                   <Button primary>Peça de novo</Button>
                 </div>
               </CardFooter>

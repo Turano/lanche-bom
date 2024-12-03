@@ -15,6 +15,7 @@ import { SubHeader } from './components/SubHeader/index.tsx';
 import { CardapioProvider } from './contexts/cardapio/CardapioProvider.tsx';
 import { PocketProvider } from './contexts/api/PocketProvider.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ResetTabFocus } from './utils/ResetTabFocus.ts';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +35,7 @@ createRoot(document.getElementById('root')!).render(
             <CardapioProvider>
               <Router>
                 <Headers>
+                  <ResetTabFocus />
                   <MainHeader />
                   <SubHeader />
                 </Headers>
