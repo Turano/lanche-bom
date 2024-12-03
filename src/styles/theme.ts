@@ -16,11 +16,11 @@ export const defaultTheme: DefaultTheme = {
       default: "'Roboto', sans-serif",
     },
     sizes: {
-      xsmall: '1rem',
-      small: '1.8rem',
-      medium: '2.6rem',
-      large: '3.2rem',
-      huge: '5.6rem',
+      xsmall: '1rem', // Pequeno
+      small: '1.8rem', // Médio
+      medium: '2.6rem', // Grande
+      large: '3.2rem', // Maior
+      huge: '5.6rem', // Muito grande
     },
   },
   media: {

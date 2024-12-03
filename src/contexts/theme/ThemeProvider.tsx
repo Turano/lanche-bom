@@ -12,9 +12,10 @@ export const AppThemeProvider = ({ children }: AppThemeProviderProps) => {
 
   useEffect(() => {
     const localTheme = localStorage.getItem('theme');
-    if (!localTheme) return;
-    const newTheme = JSON.parse(localTheme);
-    setAppTheme(newTheme);
+    if (localTheme) {
+      const newTheme = JSON.parse(localTheme);
+      setAppTheme(newTheme);
+    }
   }, []);
 
   const handleSetTheme: AppThemeContextValues['setTheme'] = useCallback(
@@ -30,9 +31,43 @@ export const AppThemeProvider = ({ children }: AppThemeProviderProps) => {
     [],
   );
 
+  // Funções para aumentar ou diminuir o tamanho da fonte no theme
+  const adjustFontSize = (operation: 'increase' | 'decrease') => {
+    const factor = operation === 'increase' ? 1.2 : 0.8;
+
+    // Função que vai aplicar o aumento ou diminuição em todos os tamanhos de fontes
+    const adjustThemeFontSizes = (theme: typeof defaultTheme) => {
+      const newFontSizes = Object.keys(theme.font.sizes).reduce(
+        (acc: { [key: string]: string }, size) => {
+          acc[size] = `${parseFloat(theme.font.sizes[size]) * factor}rem`;
+          return acc;
+        },
+        {},
+      );
+
+      return {
+        ...theme,
+        font: {
+          ...theme.font,
+          sizes: newFontSizes,
+        },
+      };
+    };
+
+    const newTheme = adjustThemeFontSizes(appTheme);
+    setAppTheme(newTheme);
+    localStorage.setItem('theme', JSON.stringify(newTheme));
+  };
+
   return (
     <AppThemeContext.Provider
-      value={{ theme: appTheme, setTheme: handleSetTheme }}
+      value={{
+        theme: appTheme,
+        setTheme: handleSetTheme,
+        fontSize: parseFloat(appTheme.font.sizes.default),
+        increaseFont: () => adjustFontSize('increase'),
+        decreaseFont: () => adjustFontSize('decrease'),
+      }}
     >
       <ThemeProvider theme={appTheme}>{children}</ThemeProvider>
     </AppThemeContext.Provider>

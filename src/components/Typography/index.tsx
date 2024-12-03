@@ -1,3 +1,4 @@
+import { useAppTheme } from '../../contexts/theme/useTheme';
 import * as Styled from './styles';
 
 export type TypographyProps = {
@@ -10,6 +11,7 @@ export type TypographyProps = {
   align?: 'left' | 'center' | 'right' | 'justify';
   overflow?: 'none' | 'ellipsis';
   limitLines?: number | 'none';
+  fontSize?: number;
 };
 
 export const Typography = ({
@@ -23,6 +25,8 @@ export const Typography = ({
   overflow = 'none',
   limitLines = 'none',
 }: TypographyProps) => {
+  const { fontSize } = useAppTheme();
+
   return (
     <Styled.Text
       colorDark={colorDark}
@@ -33,6 +37,7 @@ export const Typography = ({
       align={align}
       overflow={overflow}
       limitLines={limitLines}
+      fontSize={fontSize}
     >
       {children}
     </Styled.Text>
