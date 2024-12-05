@@ -30,15 +30,14 @@ export const Confirmação = () => {
       {
         onSuccess: () => {
           console.log('Pedido finalizado com sucesso!');
+          dispatch({ type: 'CLEAR_CART' });
+          navigate('/historico');
         },
         onError: (error) => {
           console.error('Erro ao finalizar o pedido:', error);
         },
       },
     );
-
-    dispatch({ type: 'CLEAR_CART' });
-    navigate('/historico');
   };
 
   const total = state.items.reduce((acc, item) => {
