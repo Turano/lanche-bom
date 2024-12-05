@@ -6,12 +6,16 @@ import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
 import { useSearchParams } from 'react-router-dom';
 import { usePocket } from '../../contexts/api/usePocket';
+import { useTheme } from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 interface ItemProps {
   closeModal: () => void;
 }
 
 export const Item = (props: ItemProps) => {
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery({ query: theme.media.lteMedium });
   const { dispatch } = useCart();
   const { getCardapio } = usePocket();
   const [searchParams] = useSearchParams();
@@ -53,9 +57,51 @@ export const Item = (props: ItemProps) => {
     return <p>Item não encontrado.</p>;
   }
 
+  if (isMediumScreen) {
+    return (
+      <div>
+        <Image src={item.imgUrl} alt="placeholder" width="75%" border="2px" />
+        <Typography size="large" as="h2" weight="bold" uppercase align="center">
+          {item.name}
+        </Typography>
+        <Typography size="small" as="p">
+          {item.description}
+        </Typography>
+
+        <Textarea
+          placeholder="Observações"
+          onChange={handleChangeTextArea}
+          value={obs}
+        />
+
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '80%',
+            maxWidth: '400px',
+            display: 'flex',
+          }}
+        >
+          <Button onClick={handleDecrement} borderRadius="left">
+            -
+          </Button>
+          <Button onClick={handleAddToCart} isMiddle={true}>
+            {count.toString()} - R$ {(count * item.price).toFixed(2)}
+          </Button>
+          <Button onClick={handleIncrement} borderRadius="right">
+            +
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <Image src={item.imgUrl} alt="placeholder" width="75%" />
+      <Image src={item.imgUrl} alt="placeholder" width="75%" border="2px" />
       <Typography size="large" as="h2" weight="bold" uppercase align="center">
         {item.name}
       </Typography>
@@ -69,7 +115,17 @@ export const Item = (props: ItemProps) => {
         value={obs}
       />
 
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '80%',
+          maxWidth: '400px',
+          display: 'flex',
+        }}
+      >
         <Button onClick={handleDecrement} borderRadius="left">
           -
         </Button>

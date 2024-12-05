@@ -3,14 +3,12 @@ import { Typography } from '../Typography';
 import {
   Button,
   Container,
-  ScrollJump,
   StyledBackIcon,
   StyledButton,
   StyledCloseIcon,
 } from './styles';
-import { FaBirthdayCake, FaHamburger, FaHotdog } from 'react-icons/fa';
-import { FaGlassWater } from 'react-icons/fa6';
 import { usePocket } from '../../contexts/api/usePocket';
+import { ReactSVG } from 'react-svg';
 
 const routes = [
   {
@@ -39,30 +37,43 @@ export const SubHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { getCardapio } = usePocket();
+  const { getCardapio, getCategorias } = usePocket();
 
   const [searchParams] = useSearchParams();
   const itemId = searchParams.get('itemId');
 
   const item = getCardapio.data?.find((item) => item.id === itemId);
 
+  const handleScrollToElement = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Se estiver na home
   if (location.pathname === '/') {
+    // Se item for undefined (não estiver em um item específico e sim no cardápio)
     if (!itemId) {
+      // Se estiver carregando as categorias
+      if (getCategorias.isLoading) {
+        return (
+          <Container>
+            <Button />
+          </Container>
+        );
+      }
       return (
-        <ScrollJump>
-          <Button onClick={() => navigate('#hamburguer')}>
-            <FaHamburger />
-          </Button>
-          <Button onClick={() => navigate('#hotdog')}>
-            <FaHotdog />
-          </Button>
-          <Button onClick={() => navigate('#bebida')}>
-            <FaGlassWater />
-          </Button>
-          <Button onClick={() => navigate('#pastel')}>
-            <FaBirthdayCake />
-          </Button>
-        </ScrollJump>
+        <Container>
+          {getCategorias.data?.map((categoria) => (
+            <Button
+              key={categoria.id}
+              onClick={() => handleScrollToElement(categoria.name)}
+            >
+              <ReactSVG src={categoria.img} />
+            </Button>
+          ))}
+        </Container>
       );
     } else {
       return (
@@ -73,7 +84,7 @@ export const SubHeader: React.FC = () => {
           <Typography weight="bold" as="h2" align="center" size="medium">
             {item?.category.toUpperCase()}
           </Typography>
-          <div />
+          <div style={{ width: '40px' }} />
         </Container>
       );
     }

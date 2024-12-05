@@ -6,12 +6,14 @@ export type ImageProps = {
   borderRadius?: string;
   width?: string;
   height?: string;
+  border?: string;
 };
 
 export const Image: React.FC<ImageProps> = ({
   src,
   alt,
   borderRadius,
+  border = 'none',
   width = 'auto',
   height = 'auto',
 }) => {
@@ -22,6 +24,7 @@ export const Image: React.FC<ImageProps> = ({
       borderRadius={borderRadius}
       width={width}
       height={height}
+      border={border}
     />
   );
 };

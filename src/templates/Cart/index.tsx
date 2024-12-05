@@ -3,13 +3,18 @@ import { Button } from '../../components/Button';
 import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
 import { Card } from '../../components/Card';
-import { ButtonContainer, ButtonGroupContainer } from './styles';
+import { Break, ButtonGroupContainer } from './styles';
 import { usePocket } from '../../contexts/api/usePocket';
+import { BottomButtonContainer } from '../../styles';
+import { useTheme } from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 export const Cart = () => {
   const { state, dispatch } = useCart();
   const navigate = useNavigate();
   const { getCardapio } = usePocket();
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery({ query: theme.media.lteMedium });
 
   const handleDecrement = (id: string, quantity: number) => () => {
     if (quantity === 1) {
@@ -51,43 +56,69 @@ export const Cart = () => {
       </Typography>
       {state.items.length ? (
         <>
-          {state.items.map((item, index) => {
-            const product = getCardapio.data?.find(
-              (data) => data.id === item.id,
-            );
-            return product ? (
-              <div key={index}>
-                <Card
-                  name={product.name}
-                  price={product.price}
-                  description={product.description}
-                  imgUrl={product.imgUrl}
-                  onClick={() => {}}
-                />
-                <ButtonGroupContainer>
-                  <Button
-                    borderRadius="left"
-                    onClick={handleDecrement(product.id, item.quantity)}
-                  >
-                    -
-                  </Button>
-                  <Button isMiddle disabled={true}>
-                    {item.quantity}
-                  </Button>
-                  <Button
-                    borderRadius="right"
-                    onClick={handleIncrement(product.id, item.quantity)}
-                  >
-                    +
-                  </Button>
-                </ButtonGroupContainer>
-                <hr />
-              </div>
-            ) : null;
-          })}
+          <div
+            style={
+              isMediumScreen
+                ? {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                  }
+                : undefined
+            }
+          >
+            {state.items.map((item, index) => {
+              const product = getCardapio.data?.find(
+                (data) => data.id === item.id,
+              );
+              return product ? (
+                <div
+                  key={index}
+                  style={
+                    isMediumScreen
+                      ? {
+                          width: '48%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                        }
+                      : undefined
+                  }
+                >
+                  <Card
+                    name={product.name}
+                    price={product.price}
+                    description={product.description}
+                    imgUrl={product.imgUrl}
+                    onClick={() => {}}
+                    alt={product.alt}
+                  />
+                  <ButtonGroupContainer>
+                    <Button
+                      borderRadius="left"
+                      onClick={handleDecrement(product.id, item.quantity)}
+                    >
+                      -
+                    </Button>
+                    <Button isMiddle disabled={true}>
+                      {item.quantity}
+                    </Button>
+                    <Button
+                      borderRadius="right"
+                      onClick={handleIncrement(product.id, item.quantity)}
+                    >
+                      +
+                    </Button>
+                  </ButtonGroupContainer>
+                  <Break />
+                </div>
+              ) : null;
+            })}
+          </div>
           <Typography as="p" size="medium" weight="bold">
             Total: R$ {total.toFixed(2)}
           </Typography>
+          <div style={{ marginBottom: '8rem' }} />
         </>
       ) : (
         <Typography as="p" size="medium">
@@ -95,7 +126,7 @@ export const Cart = () => {
         </Typography>
       )}
 
-      <ButtonContainer>
+      <BottomButtonContainer>
         <Button
           borderRadius="both"
           onClick={() => navigate('/pedido')}
@@ -105,7 +136,7 @@ export const Cart = () => {
             Continuar pedido
           </Typography>
         </Button>
-      </ButtonContainer>
+      </BottomButtonContainer>
     </>
   );
 };

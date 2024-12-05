@@ -8,8 +8,9 @@ type Props = {
 };
 
 export const CardapioProvider = ({ children }: Props) => {
-  const { getCardapio } = usePocket();
+  const { getCardapio, getCategorias } = usePocket();
 
+  const categorias = getCategorias.data || [];
   const [cardapioItems] = useState<Item[]>(getCardapio.data || []);
 
   const getItemDetails = (id: string): Item | undefined => {
@@ -17,7 +18,9 @@ export const CardapioProvider = ({ children }: Props) => {
   };
 
   return (
-    <CardapioContext.Provider value={{ cardapioItems, getItemDetails }}>
+    <CardapioContext.Provider
+      value={{ cardapioItems, getItemDetails, categorias }}
+    >
       {children}
     </CardapioContext.Provider>
   );

@@ -4,8 +4,10 @@ export interface Item {
   price: number;
   description: string;
   category: string;
+  categoria: string;
   img: string;
   imgUrl: string;
+  alt: string;
 }
 
 export interface User {
@@ -40,4 +42,10 @@ export interface Info {
   obs: string;
   price: number;
   status: 'Em preparo' | 'Preparado' | 'Finalizado';
+}
+
+export interface Categoria {
+  id: string;
+  name: string;
+  img: string;
 }

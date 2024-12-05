@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Input } from '../../components/Input';
 import { ToggleButton } from '../../components/ToggleButton';
-import { ButtonContainer, Container, ToggleButtonContainer } from './styles';
+import { Container, ToggleButtonContainer } from './styles';
 import { Button } from '../../components/Button';
 import { Typography } from '../../components/Typography';
 import { useForm, Controller } from 'react-hook-form';
 import { useCart } from '../../contexts/cart';
 import { useNavigate } from 'react-router-dom';
+import { BottomButtonContainer } from '../../styles';
 
 type FormData = {
   name: string;
@@ -137,7 +138,7 @@ export const InfosPedido: React.FC = () => {
               <Input {...register('complemento')}>Complemento</Input>
             </>
           )}
-          <ButtonContainer>
+          <BottomButtonContainer>
             <Button
               borderRadius="both"
               type="submit"
@@ -148,7 +149,7 @@ export const InfosPedido: React.FC = () => {
                 Continuar
               </Typography>
             </Button>
-          </ButtonContainer>
+          </BottomButtonContainer>
         </form>
       </Container>
     </>

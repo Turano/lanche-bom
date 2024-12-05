@@ -6,9 +6,8 @@ export const ButtonGroupContainer = styled.div`
   margin: 20px;
 `;
 
-export const ButtonContainer = styled.div`
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%); /* Centraliza horizontalmente */
+export const Break = styled.hr`
+  @media ${({ theme }) => theme.media.lteMedium} {
+    display: none;
+  }
 `;

@@ -5,6 +5,11 @@ export const Wrapper = styled.div`
   flex-direction: column;
   margin: 0 10px;
   margin-top: 110px;
+
+  @media ${({ theme }) => theme.media.lteMedium} {
+    margin: 0 5rem;
+    margin-top: 110px;
+  }
 `;
 
 export const Headers = styled.div`
@@ -14,4 +19,16 @@ export const Headers = styled.div`
   top: 0;
   width: 100%;
   z-index: 3000;
+`;
+
+export const BottomButtonContainer = styled.div`
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 400px;
+  button {
+    width: 100%;
+  }
 `;

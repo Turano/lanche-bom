@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 import { useMutation, useQuery } from 'react-query';
-import { Info, Item, Pedido, SelectedItem } from '../../types';
+import { Categoria, Info, Item, Pedido, SelectedItem } from '../../types';
 import { PocketContext } from './PocketContext';
 
 // Instância do PocketBase
@@ -80,6 +80,19 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
     },
   });
 
+  const getCategorias = useQuery<Categoria[], Error>({
+    queryKey: 'categorias',
+    queryFn: async () => {
+      const categorias = await pb
+        .collection('categorias')
+        .getFullList<Categoria>();
+      return categorias.map((categoria) => ({
+        ...categoria,
+        img: pb.files.getURL(categoria, categoria.img),
+      }));
+    },
+  });
+
   const getLogo = useQuery<string, Error>({
     queryKey: 'logo',
     queryFn: async () => {
@@ -105,6 +118,7 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
         getCardapio,
         useHistorico,
         getLogo,
+        getCategorias,
       }}
     >
       {children}
