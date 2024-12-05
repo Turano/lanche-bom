@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Info, Item, SelectedItem } from '../../types';
+import { Categoria, Info, Item, SelectedItem } from '../../types';
 import { UseMutationResult, UseQueryResult } from 'react-query';
 
 // Contexto e Provider
@@ -23,6 +23,7 @@ export interface PocketContextProps {
   getCardapio: UseQueryResult<Item[], Error>;
   useHistorico: (userId: string) => UseQueryResult<Info[], Error>;
   getLogo: UseQueryResult<string, Error>;
+  getCategorias: UseQueryResult<Categoria[], Error>;
 }
 
 // Contexto vazio, será preenchido pelo `PocketProvider`

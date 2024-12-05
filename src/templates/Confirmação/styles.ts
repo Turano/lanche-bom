@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -12,11 +12,3 @@ export const ItemContainer = styled.div`
   justify-content: space-between;
   margin: 10px 0;
 `;
-
-export const ButtonContainer = styled.div`
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%); /* Centraliza horizontalmente */
-`;
-

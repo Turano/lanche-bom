@@ -24,8 +24,8 @@ export const defaultTheme: DefaultTheme = {
     },
   },
   media: {
-    lteMedium: '(max-width: 768px)',
-    lteSmall: '(max-width: 360px)',
+    lteMedium: '(min-width: 768px)',
+    lteSmall: '(min-width: 360px)',
   },
   spacings: {
     xsmall: '0.8rem',
@@ -65,8 +65,8 @@ export const invertedTheme: DefaultTheme = {
     },
   },
   media: {
-    lteMedium: '(max-width: 768px)',
-    lteSmall: '(max-width: 360px)',
+    lteMedium: '(min-width: 768px)',
+    lteSmall: '(min-width: 360px)',
   },
   spacings: {
     xsmall: '0.8rem',

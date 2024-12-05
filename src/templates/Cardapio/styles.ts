@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const CardGroupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  height: 100vh;
+
+  @media ${({ theme }) => theme.media.lteMedium} {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 `;
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10px 5px;
+export const Break = styled.hr`
+  @media ${({ theme }) => theme.media.lteMedium} {
+    display: none;
+  }
 `;

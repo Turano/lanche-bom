@@ -2,8 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Typography } from '../../components/Typography';
 import { useCart } from '../../contexts/cart';
-import { ButtonContainer, Container, ItemContainer } from './styles';
+import { Container, ItemContainer } from './styles';
 import { usePocket } from '../../contexts/api/usePocket';
+import { BottomButtonContainer } from '../../styles';
 
 export const Confirmação = () => {
   const { state, dispatch } = useCart();
@@ -61,7 +62,7 @@ export const Confirmação = () => {
               <li key={item.id} style={{ listStyleType: 'none' }}>
                 <ItemContainer>
                   <Typography size="small">
-                    {item.quantity} {product?.name}
+                    {item.quantity}x {product?.name}
                   </Typography>
                   <Typography size="small">
                     R$ {product?.price.toFixed(2)}
@@ -96,13 +97,13 @@ export const Confirmação = () => {
             </Typography>
           </>
         )}
-        <ButtonContainer>
+        <BottomButtonContainer>
           <Button borderRadius="both" onClick={handleFinalizar}>
             <Typography as="p" size="small">
               Finalizar Pedido
             </Typography>
           </Button>
-        </ButtonContainer>
+        </BottomButtonContainer>
       </Container>
     </>
   );

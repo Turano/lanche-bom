@@ -9,6 +9,12 @@ export const CardContainer = styled.div`
   position: relative;
   margin: 10px 5px;
   padding: 5px;
+
+  @media ${({ theme }) => theme.media.lteMedium} {
+    border: 1px solid ${({ theme }) => theme.colors.text};
+    border-radius: 10px;
+    height: 200px;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -21,15 +27,16 @@ export const CardContent = styled.div`
   position: relative;
   flex: 1;
   justify-content: space-around;
+
 `;
 
 export const CardHeader = styled.div`
   display: flex;
-  flex-direction: row;
   position: relative;
   justify-content: space-between;
-  font-size: ${({ theme }) => theme.font.sizes.medium};
-  color: ${({ theme }) => theme.colors.dark};
+  @media ${({ theme }) => theme.media.lteMedium} {
+    flex-direction: column;
+  }
 `;
 
 export const TestContainer = styled.div`

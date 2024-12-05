@@ -2,22 +2,22 @@ import { useState } from 'react';
 import { Card } from '../../components/Card';
 import { Typography } from '../../components/Typography';
 import { Modal } from '../../components/Modal';
-import { Container, Wrapper } from './styles';
 import { Item } from '../Item';
 import { CartButton } from '../../components/CartButton';
 import { useCart } from '../../contexts/cart';
 import { useNavigate } from 'react-router-dom';
 import { usePocket } from '../../contexts/api/usePocket';
-
-const categories = ['pastel', 'bebida', 'hotdog', 'hamburguer'];
+import { Break, CardGroupContainer } from './styles';
+import { useTheme } from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 
 export const Cardapio: React.FC = () => {
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
-
-  const { getCardapio } = usePocket();
-
+  const { getCardapio, getCategorias } = usePocket();
   const { state } = useCart();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery({ query: theme.media.lteMedium });
 
   const closeItemModal = () => {
     setIsItemModalOpen(false);
@@ -40,50 +40,45 @@ export const Cardapio: React.FC = () => {
     );
   }
 
-  if (getCardapio.isLoading) {
+  if (getCardapio.isLoading || getCategorias.isLoading) {
     return <Typography>Carregando...</Typography>;
   }
 
-  if (getCardapio.isError) {
+  if (getCardapio.isError || getCategorias.isError) {
     return <Typography>Erro ao carregar cardápio</Typography>;
   }
 
-  console.log(getCardapio.data);
-
-  const items = getCardapio.data || [];
-
   return (
     <>
-      <Wrapper>
-        <Container>
-          {categories.map((category) => {
-            const filteredItems = items?.filter(
-              (item) => item.category === category,
-            );
-            return (
-              <div key={category} id={category}>
-                <Typography size="large" as="h2" weight="bold" uppercase>
-                  {category}
-                </Typography>
-                {filteredItems?.map((item, index) => (
-                  <div key={index}>
-                    <Card
-                      onClick={(e: React.MouseEvent<HTMLDivElement>) =>
-                        handleItemClick(e, item.id)
-                      }
-                      name={item.name}
-                      price={item.price}
-                      description={item.description}
-                      imgUrl={item.imgUrl}
-                    />
-                    <hr />
-                  </div>
-                ))}
-              </div>
-            );
-          })}
-        </Container>
-      </Wrapper>
+      {getCategorias.data?.map((category) => {
+        const filteredItems = getCardapio.data?.filter(
+          (item) => item.categoria === category.id,
+        );
+        return (
+          <div key={category.id} id={category.name}>
+            <Typography size="large" as="h2" weight="bold">
+              {category.name}
+            </Typography>
+            <CardGroupContainer>
+              {filteredItems?.map((item) => (
+                <div style={isMediumScreen ? { width: '48%' } : undefined}>
+                  <Card
+                    onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                      handleItemClick(e, item.id)
+                    }
+                    name={item.name}
+                    price={item.price}
+                    description={item.description}
+                    imgUrl={item.imgUrl}
+                    alt={item.alt}
+                  />
+                  <Break />
+                </div>
+              ))}
+            </CardGroupContainer>
+          </div>
+        );
+      })}
       {state.items.length ? (
         <CartButton onClick={() => navigate('/carrinho')} />
       ) : null}
