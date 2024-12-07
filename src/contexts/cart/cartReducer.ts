@@ -1,36 +1,34 @@
-export type Product = {
-  id: string;
-  obs?: string;
-  quantity: number;
-};
+import { SelectedItem } from '../../types';
 
 export type CartState = {
-  items: Product[];
+  items: SelectedItem[];
   userId: string;
-  name: string;
+  nome: string;
   tel: string;
-  cep?: string;
   rua?: string;
+  bairro?: string;
   numero?: string;
   complemento?: string;
   tipoEntrega: 'entrega' | 'retirada';
+  primeiroPedido: boolean;
 };
 
 export type CartAction =
-  | { type: 'ADD_TO_CART'; payload: Product }
+  | { type: 'ADD_TO_CART'; payload: SelectedItem }
   | { type: 'REMOVE_FROM_CART'; payload: string }
-  | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantity: number } }
+  | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantidade: number } }
   | { type: 'CLEAR_CART' }
   | {
       type: 'SET_INFO';
       payload: {
-        name: string;
+        nome: string;
         tel: string;
-        cep?: string;
         rua?: string;
         numero?: string;
+        bairro?: string;
         complemento?: string;
         tipoEntrega: 'entrega' | 'retirada';
+        primeiroPedido?: boolean;
       };
     };
 
@@ -41,14 +39,17 @@ export const cartReducer = (
   switch (action.type) {
     case 'ADD_TO_CART': {
       const existingItem = state.items.find(
-        (item) => item.id === action.payload.id,
+        (item) => item.item === action.payload.item,
       );
       if (existingItem) {
         return {
           ...state,
           items: state.items.map((item) =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + action.payload.quantity }
+            item.item === action.payload.item
+              ? {
+                  ...item,
+                  quantidade: item.quantidade + action.payload.quantidade,
+                }
               : item,
           ),
         };
@@ -61,23 +62,23 @@ export const cartReducer = (
     case 'REMOVE_FROM_CART':
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
+        items: state.items.filter((item) => item.item !== action.payload),
       };
     case 'UPDATE_QUANTITY':
       return {
         ...state,
         items: state.items.map((item) =>
-          item.id === action.payload.id
-            ? { ...item, quantity: action.payload.quantity }
+          item.item === action.payload.id
+            ? { ...item, quantidade: action.payload.quantidade }
             : item,
         ),
       };
     case 'CLEAR_CART':
       return {
         ...state,
-        name: '',
+        nome: '',
         tel: '',
-        cep: '',
+        bairro: '',
         complemento: '',
         numero: '',
         rua: '',

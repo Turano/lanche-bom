@@ -1,51 +1,65 @@
 export interface Item {
   id: string;
-  name: string;
-  price: number;
-  description: string;
-  category: string;
   categoria: string;
+  nome: string;
+  preco: number;
+  descricao: string;
   img: string;
   imgUrl: string;
   alt: string;
+  disponivel: boolean;
 }
 
 export interface User {
   id: string;
-  name: string;
+  nome: string;
   tel: string;
-  cep: string;
-  logradouro: string;
-  numero: number;
-  complemento: string;
+  rua?: string;
+  numero?: string;
+  complemento?: string;
+  bairro?: string;
+  tipoEntrega: 'entrega' | 'retirada';
+  primeiroPedido?: boolean;
 }
 
 export interface SelectedItem {
-  id: string;
-  quantity: number;
+  id?: string;
+  item: string; // itemId
+  quantidade: number;
   obs?: string;
 }
 
 export interface Pedido {
-  id: string;
-  userId: string;
+  id?: string;
   items: SelectedItem[];
   status: 'Em preparo';
+  desejaCancelar?: boolean;
+}
+
+interface ExpandItem {
+  obs: string;
+  quantidade: number;
+  expand: {
+    item: {
+      nome: string;
+      preco: number;
+    };
+  };
 }
 
 export interface Info {
   id: string;
-  userId: string;
-  itemId: string;
-  date: string;
-  quantity: number;
-  obs: string;
-  price: number;
+  cliente: string;
+  expand: {
+    itens: ExpandItem[];
+  };
+  created: string;
   status: 'Em preparo' | 'Preparado' | 'Finalizado';
+  precoTotal: number;
 }
 
 export interface Categoria {
   id: string;
-  name: string;
+  nome: string;
   img: string;
 }

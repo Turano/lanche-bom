@@ -6,8 +6,6 @@ import { usePocket } from '../../contexts/api/usePocket';
 export const MainHeader = () => {
   const { getLogo } = usePocket();
 
-  console.log(getLogo);
-
   return (
     <HeaderContainer>
       <HamburgerMenu />

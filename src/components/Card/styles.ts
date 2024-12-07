@@ -4,21 +4,24 @@ export const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 90px;
   cursor: pointer;
   position: relative;
-  margin: 10px 5px;
-  padding: 5px;
+  margin: 1% 0;
 
   @media ${({ theme }) => theme.media.lteMedium} {
     border: 1px solid ${({ theme }) => theme.colors.text};
-    border-radius: 10px;
-    height: 200px;
+    border-radius: 1rem;
+    padding: 2%;
   }
 `;
 
 export const ImageContainer = styled.div`
-  margin-right: 20px;
+  margin-right: 5%;
+  width: 30%;
+
+  @media ${({ theme }) => theme.media.lteMedium} {
+    margin: 1% 0;
+  }
 `;
 
 export const CardContent = styled.div`
@@ -27,7 +30,6 @@ export const CardContent = styled.div`
   position: relative;
   flex: 1;
   justify-content: space-around;
-
 `;
 
 export const CardHeader = styled.div`
@@ -39,6 +41,14 @@ export const CardHeader = styled.div`
   }
 `;
 
+export const CardTitle = styled.div`
+  width: 60%;
+`;
+
+export const CardPrice = styled.div`
+  width: 40%;
+`;
+
 export const TestContainer = styled.div`
-  border: 1px solid black;
+  border: 1px solid ${({ theme }) => theme.colors.text};
   `;

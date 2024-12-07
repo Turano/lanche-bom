@@ -68,7 +68,7 @@ export const SubHeader: React.FC = () => {
           {getCategorias.data?.map((categoria) => (
             <Button
               key={categoria.id}
-              onClick={() => handleScrollToElement(categoria.name)}
+              onClick={() => handleScrollToElement(categoria.nome)}
             >
               <ReactSVG src={categoria.img} />
             </Button>
@@ -82,7 +82,11 @@ export const SubHeader: React.FC = () => {
             <StyledBackIcon />
           </StyledButton>
           <Typography weight="bold" as="h2" align="center" size="medium">
-            {item?.category.toUpperCase()}
+            {
+              getCategorias.data?.find(
+                (categoria) => categoria.id === item?.categoria,
+              )?.nome
+            }
           </Typography>
           <div style={{ width: '40px' }} />
         </Container>

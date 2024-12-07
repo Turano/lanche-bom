@@ -5,13 +5,15 @@ import {
   CardContainer,
   CardContent,
   CardHeader,
+  CardPrice,
+  CardTitle,
   ImageContainer,
 } from './styles';
 import { useTheme } from 'styled-components';
 
 interface CardProps {
   image?: string;
-  name: string;
+  nome: string;
   price: number;
   description: string;
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -41,18 +43,18 @@ export const Card = (props: CardProps) => {
         }}
       >
         <CardContent>
-          <Typography as="h3" size="large">
-            {props.name}
+          <Typography as="h3" size="medium">
+            {props.nome}
           </Typography>
           <Typography as="p" size="small" overflow="ellipsis" limitLines={2}>
-            {props.description}
+            {props.description ? props.description : 'Sem descrição'}
           </Typography>
           <Typography as="p" size="small">
             R$ {props.price.toFixed(2)}
           </Typography>
         </CardContent>
         <ImageContainer>
-          <Image src={props.imgUrl} alt={props.alt} height="90%" />
+          <Image src={props.imgUrl} alt={props.alt} width="100%" />
         </ImageContainer>
       </CardContainer>
     );
@@ -75,19 +77,23 @@ export const Card = (props: CardProps) => {
       }}
     >
       <ImageContainer>
-        <Image src={props.imgUrl} alt={props.alt} height="100%" border="1px" />
+        <Image src={props.imgUrl} alt={props.alt} width="100%" border="1px" />
       </ImageContainer>
       <CardContent>
         <CardHeader>
-          <Typography as="h3" size="small" weight="bold">
-            {props.name}
-          </Typography>
-          <Typography as="p" size="small" weight="bold">
-            R$ {props.price.toFixed(2)}
-          </Typography>
+          <CardTitle>
+            <Typography as="h3" size="small" weight="bold">
+              {props.nome}
+            </Typography>
+          </CardTitle>
+          <CardPrice>
+            <Typography as="p" size="small" weight="bold" align="right">
+              R$ {props.price.toFixed(2)}
+            </Typography>
+          </CardPrice>
         </CardHeader>
         <Typography as="p" size="small" overflow="ellipsis" limitLines={2}>
-          {props.description}
+          {props.description ? props.description : 'Sem descrição'}
         </Typography>
       </CardContent>
     </CardContainer>

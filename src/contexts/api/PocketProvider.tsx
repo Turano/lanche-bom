@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 import { useMutation, useQuery } from 'react-query';
-import { Categoria, Info, Item, Pedido, SelectedItem } from '../../types';
+import { Categoria, Info, Item, Pedido, SelectedItem, User } from '../../types';
 import { PocketContext } from './PocketContext';
 
 // Instância do PocketBase
@@ -13,52 +13,94 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
   // React Query para finalizar pedido
   const finalizarPedido = useMutation({
     mutationFn: async ({
-      userId,
-      name,
-      tel,
-      cep,
-      rua,
-      numero,
-      complemento,
-      tipoEntrega,
-      itensSelecionados,
+      pedidoInfo,
+      user,
     }: {
-      userId: string;
-      name: string;
-      tel: string;
-      cep?: string;
-      rua?: string;
-      numero?: string;
-      complemento?: string;
-      tipoEntrega: 'entrega' | 'retirada';
-      itensSelecionados: SelectedItem[];
-      status: 'Em preparo';
+      pedidoInfo: Pedido;
+      user: User;
     }): Promise<void> => {
-      const pedido = await pb.collection('pedidos').create<Pedido>({
-        userId,
-        name,
-        tel,
-        cep,
-        rua,
-        numero,
-        complemento,
-        tipoEntrega,
-        status: 'Em preparo',
-      });
+      const isAberto = await pb.collection('config').getFirstListItem('');
 
-      const itemSelectedPromises = itensSelecionados.map((item) =>
+      if (!isAberto.aberto) {
+        throw new Error('A lanchonete está fechada no momento.');
+      }
+
+      let enderecoId;
+
+      if (user.primeiroPedido) {
+        if (user.tipoEntrega === 'entrega') {
+          const endereco = await pb.collection('enderecos').create({
+            rua: user.rua,
+            numero: user.numero,
+            complemento: user.complemento,
+            bairro: user.bairro,
+          });
+          enderecoId = endereco.id;
+        }
+
+        await pb.collection('users').create({
+          id: user.id,
+          nome: user.nome,
+          telefone: user.tel,
+          endereco: enderecoId,
+        });
+      } else {
+        if (user.tipoEntrega === 'entrega') {
+          const endereco = await pb.collection('users').getFirstListItem('', {
+            filter: `id = "${user.id}"`,
+          });
+
+          if (!endereco.endereco) {
+            enderecoId = await pb.collection('enderecos').create({
+              rua: user.rua,
+              numero: user.numero,
+              complemento: user.complemento,
+              bairro: user.bairro,
+            });
+          } else {
+            enderecoId = await pb
+              .collection('enderecos')
+              .update(endereco.endereco, {
+                rua: user.rua,
+                numero: user.numero,
+                complemento: user.complemento,
+                bairro: user.bairro,
+              });
+          }
+          await pb.collection('users').update(user.id, {
+            nome: user.nome,
+            telefone: user.tel,
+            endereco: enderecoId,
+          });
+        } else {
+          await pb.collection('users').update(user.id, {
+            nome: user.nome,
+            telefone: user.tel,
+          });
+        }
+      }
+
+      const itemSelectedPromises = pedidoInfo.items.map((item) =>
         pb.collection('requestedItems').create<SelectedItem>(
           {
-            item: item.id,
-            quantity: item.quantity,
+            item: item.item,
+            quantidade: item.quantidade,
             obs: item.obs,
-            pedidoId: pedido.id,
           },
-          { requestKey: item.id },
+          { requestKey: item.item },
         ),
       );
 
-      await Promise.all(itemSelectedPromises);
+      const itemSelected = await Promise.all(itemSelectedPromises);
+
+      const itemSelectedIds = itemSelected.map((item) => item.id);
+
+      await pb.collection('pedidos').create<Pedido>({
+        ...pedidoInfo,
+        cliente: user.id,
+        itens: itemSelectedIds,
+        tipoEntrega: user.tipoEntrega,
+      });
     },
     onSuccess: () => {
       console.log('Pedido finalizado com sucesso!');
@@ -105,8 +147,9 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
     return useQuery<Info[], Error>({
       queryKey: ['historico', userId], // Adiciona o userId na queryKey
       queryFn: async () =>
-        await pb.collection('pedidosLista').getFullList({
-          filter: `userId = "${userId}"`, // Filtra pedidos pelo userId
+        await pb.collection('pedidos').getFullList({
+          filter: `cliente = "${userId}"`,
+          expand: 'itens.item',
         }),
     });
   };

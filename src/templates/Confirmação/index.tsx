@@ -16,21 +16,27 @@ export const Confirmação = () => {
   const handleFinalizar = async () => {
     finalizarPedido.mutate(
       {
-        userId: state.userId,
-        name: state.name,
-        tel: state.tel,
-        cep: state.cep,
-        rua: state.rua,
-        numero: state.numero,
-        complemento: state.complemento,
-        tipoEntrega: state.tipoEntrega,
-        itensSelecionados: state.items,
-        status: 'Em preparo',
+        pedidoInfo: {
+          status: 'Em preparo',
+          items: state.items,
+        },
+        user: {
+          id: state.userId,
+          nome: state.nome,
+          tel: state.tel,
+          rua: state.rua,
+          bairro: state.bairro,
+          numero: state.numero,
+          complemento: state.complemento,
+          tipoEntrega: state.tipoEntrega,
+          primeiroPedido: state.primeiroPedido,
+        },
       },
       {
         onSuccess: () => {
           console.log('Pedido finalizado com sucesso!');
           dispatch({ type: 'CLEAR_CART' });
+
           navigate('/historico');
         },
         onError: (error) => {
@@ -41,8 +47,8 @@ export const Confirmação = () => {
   };
 
   const total = state.items.reduce((acc, item) => {
-    const product = getCardapio.data?.find((data) => data.id === item.id);
-    return acc + (product ? product.price * item.quantity : 0);
+    const product = getCardapio.data?.find((data) => data.id === item.item);
+    return acc + (product ? product.preco * item.quantidade : 0);
   }, 0);
 
   return (
@@ -55,16 +61,16 @@ export const Confirmação = () => {
         <ul>
           {state.items.map((item) => {
             const product = getCardapio.data?.find(
-              (data) => data.id === item.id,
+              (data) => data.id === item.item,
             );
             return (
-              <li key={item.id} style={{ listStyleType: 'none' }}>
+              <li key={item.item} style={{ listStyleType: 'none' }}>
                 <ItemContainer>
                   <Typography size="small">
-                    {item.quantity}x {product?.name}
+                    {item.quantidade}x {product?.nome}
                   </Typography>
                   <Typography size="small">
-                    R$ {product?.price.toFixed(2)}
+                    R$ {product?.preco.toFixed(2)}
                   </Typography>
                 </ItemContainer>
                 {item.obs ? (
@@ -84,13 +90,13 @@ export const Confirmação = () => {
           </Typography>
         </ItemContainer>
         <hr />
-        <Typography size="small">Nome: {state.name}</Typography>
+        <Typography size="small">Nome: {state.nome}</Typography>
         <Typography size="small">Telefone: {state.tel}</Typography>
         {state.tipoEntrega === 'retirada' ? null : (
           <>
-            <Typography size="small">CEP: {state.cep}</Typography>
             <Typography size="small">Rua: {state.rua}</Typography>
             <Typography size="small">Número: {state.numero}</Typography>
+            <Typography size="small">Bairro: {state.bairro}</Typography>
             <Typography size="small">
               Complemento: {state.complemento}
             </Typography>

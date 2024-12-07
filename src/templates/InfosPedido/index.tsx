@@ -8,31 +8,21 @@ import { useForm, Controller } from 'react-hook-form';
 import { useCart } from '../../contexts/cart';
 import { useNavigate } from 'react-router-dom';
 import { BottomButtonContainer } from '../../styles';
-
-type FormData = {
-  name: string;
-  tel: string;
-  cep?: string;
-  rua?: string;
-  numero?: string;
-  complemento?: string;
-  tipoEntrega: 'entrega' | 'retirada';
-};
+import { User } from '../../types';
 
 export const InfosPedido: React.FC = () => {
   const [selected, setSelected] = useState<'retirada' | 'entrega'>('retirada');
 
-  const { register, handleSubmit, control, setValue, watch } =
-    useForm<FormData>({
-      defaultValues: {
-        tipoEntrega: 'retirada', // or 'entrega' as a default value
-      },
-    });
+  const { register, handleSubmit, control, setValue, watch } = useForm<User>({
+    defaultValues: {
+      tipoEntrega: 'retirada', // or 'entrega' as a default value
+    },
+  });
 
   const navigate = useNavigate();
   const { dispatch } = useCart();
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: User) => {
     dispatch({
       type: 'SET_INFO',
       payload: data,
@@ -41,17 +31,17 @@ export const InfosPedido: React.FC = () => {
   };
 
   const tipoEntrega = watch('tipoEntrega');
-  const name = watch('name');
+  const name = watch('nome');
   const tel = watch('tel');
-  const cep = watch('cep');
   const rua = watch('rua');
   const numero = watch('numero');
   const complemento = watch('complemento');
+  const bairro = watch('bairro');
 
   const isFormValid =
     tipoEntrega === 'retirada'
       ? name && tel
-      : name && tel && cep && rua && numero && complemento;
+      : name && tel && rua && numero && complemento && bairro;
 
   return (
     <>
@@ -61,7 +51,7 @@ export const InfosPedido: React.FC = () => {
         </Typography>
         <div style={{ marginBottom: '2rem' }} />
         <form id="formPedido" onSubmit={handleSubmit(onSubmit)}>
-          <Input {...register('name', { required: true })}>Nome*</Input>
+          <Input {...register('nome', { required: true })}>Nome*</Input>
           <Input {...register('tel', { required: true })} type="number">
             Telefone*
           </Input>
@@ -90,8 +80,8 @@ export const InfosPedido: React.FC = () => {
                       e.preventDefault();
                       setSelected('retirada');
                       field.onChange('retirada');
-                      setValue('cep', ''); // Limpa os campos ao trocar o tipo
                       setValue('rua', '');
+                      setValue('bairro', '');
                       setValue('numero', '');
                       setValue('complemento', '');
                     }}
@@ -105,16 +95,6 @@ export const InfosPedido: React.FC = () => {
           </ToggleButtonContainer>
           {selected === 'entrega' && (
             <>
-              <Input
-                {...register('cep', {
-                  validate: (value) =>
-                    tipoEntrega !== 'entrega' || value
-                      ? true
-                      : 'O CEP é obrigatório para entrega',
-                })}
-              >
-                CEP*
-              </Input>
               <Input
                 {...register('rua', {
                   validate: (value) =>
@@ -136,6 +116,16 @@ export const InfosPedido: React.FC = () => {
                 Número*
               </Input>
               <Input {...register('complemento')}>Complemento</Input>
+              <Input
+                {...register('bairro', {
+                  validate: (value) =>
+                    tipoEntrega !== 'entrega' || value
+                      ? true
+                      : 'O bairro é obrigatória para entrega',
+                })}
+              >
+                Bairro*
+              </Input>
             </>
           )}
           <BottomButtonContainer>

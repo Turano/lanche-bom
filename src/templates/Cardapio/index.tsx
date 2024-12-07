@@ -55,9 +55,9 @@ export const Cardapio: React.FC = () => {
           (item) => item.categoria === category.id,
         );
         return (
-          <div key={category.id} id={category.name}>
+          <div key={category.id} id={category.nome}>
             <Typography size="large" as="h2" weight="bold">
-              {category.name}
+              {category.nome}
             </Typography>
             <CardGroupContainer>
               {filteredItems?.map((item) => (
@@ -66,9 +66,9 @@ export const Cardapio: React.FC = () => {
                     onClick={(e: React.MouseEvent<HTMLDivElement>) =>
                       handleItemClick(e, item.id)
                     }
-                    name={item.name}
-                    price={item.price}
-                    description={item.description}
+                    nome={item.nome}
+                    price={item.preco}
+                    description={item.descricao}
                     imgUrl={item.imgUrl}
                     alt={item.alt}
                   />

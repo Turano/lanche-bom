@@ -40,8 +40,8 @@ export const Item = (props: ItemProps) => {
       dispatch({
         type: 'ADD_TO_CART',
         payload: {
-          id: itemId,
-          quantity: count,
+          item: itemId,
+          quantidade: count,
           obs: obs,
         },
       });
@@ -62,10 +62,10 @@ export const Item = (props: ItemProps) => {
       <div>
         <Image src={item.imgUrl} alt="placeholder" width="75%" border="2px" />
         <Typography size="large" as="h2" weight="bold" uppercase align="center">
-          {item.name}
+          {item.nome}
         </Typography>
         <Typography size="small" as="p">
-          {item.description}
+          {item.descricao}
         </Typography>
 
         <Textarea
@@ -89,7 +89,7 @@ export const Item = (props: ItemProps) => {
             -
           </Button>
           <Button onClick={handleAddToCart} isMiddle={true}>
-            {count.toString()} - R$ {(count * item.price).toFixed(2)}
+            {count.toString()} - R$ {(count * item.preco).toFixed(2)}
           </Button>
           <Button onClick={handleIncrement} borderRadius="right">
             +
@@ -103,10 +103,10 @@ export const Item = (props: ItemProps) => {
     <div>
       <Image src={item.imgUrl} alt="placeholder" width="75%" border="2px" />
       <Typography size="large" as="h2" weight="bold" uppercase align="center">
-        {item.name}
+        {item.nome}
       </Typography>
       <Typography size="small" as="p">
-        {item.description}
+        {item.descricao}
       </Typography>
 
       <Textarea
@@ -130,7 +130,9 @@ export const Item = (props: ItemProps) => {
           -
         </Button>
         <Button onClick={handleAddToCart} isMiddle={true}>
-          {count.toString()} - R$ {(count * item.price).toFixed(2)}
+          <Typography as="p" size="small">
+            {count.toString()} - R$ {(count * item.preco).toFixed(2)}
+          </Typography>
         </Button>
         <Button onClick={handleIncrement} borderRadius="right">
           +
