@@ -1,5 +1,25 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ButtonProps } from '.';
+
+// Animação de rotação
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+// Estilo do Loader
+export const Loader = styled.div`
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid black; /* Cor do spinner */
+  border-radius: 50%;
+  animation: ${spin} 0.6s linear infinite;
+`;
 
 // Estilização do botão com base nas propriedades
 export const StyledButton = styled.button.withConfig({

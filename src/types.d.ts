@@ -19,7 +19,6 @@ export interface User {
   complemento?: string;
   bairro?: string;
   tipoEntrega: 'entrega' | 'retirada';
-  primeiroPedido?: boolean;
 }
 
 export interface SelectedItem {

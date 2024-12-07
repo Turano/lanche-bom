@@ -5,7 +5,7 @@ export const MenuContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   width: 35px;
-  height: 30px;
+  height: fit-content;
   cursor: pointer;
   position: relative;
 `;

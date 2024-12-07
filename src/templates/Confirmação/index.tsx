@@ -5,15 +5,18 @@ import { useCart } from '../../contexts/cart';
 import { Container, ItemContainer } from './styles';
 import { usePocket } from '../../contexts/api/usePocket';
 import { BottomButtonContainer } from '../../styles';
+import { useState } from 'react';
 
 export const Confirmação = () => {
   const { state, dispatch } = useCart();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { finalizarPedido, getCardapio } = usePocket();
 
   const navigate = useNavigate();
 
   const handleFinalizar = async () => {
+    setIsLoading(true);
     finalizarPedido.mutate(
       {
         pedidoInfo: {
@@ -29,18 +32,17 @@ export const Confirmação = () => {
           numero: state.numero,
           complemento: state.complemento,
           tipoEntrega: state.tipoEntrega,
-          primeiroPedido: state.primeiroPedido,
         },
       },
       {
         onSuccess: () => {
           console.log('Pedido finalizado com sucesso!');
           dispatch({ type: 'CLEAR_CART' });
-
           navigate('/historico');
         },
         onError: (error) => {
           console.error('Erro ao finalizar o pedido:', error);
+          setIsLoading(false);
         },
       },
     );
@@ -103,7 +105,11 @@ export const Confirmação = () => {
           </>
         )}
         <BottomButtonContainer>
-          <Button borderRadius="both" onClick={handleFinalizar}>
+          <Button
+            borderRadius="both"
+            onClick={handleFinalizar}
+            isLoading={isLoading}
+          >
             <Typography as="p" size="small">
               Finalizar Pedido
             </Typography>

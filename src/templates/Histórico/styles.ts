@@ -10,6 +10,10 @@ export const HistoryCard = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  @media ${({ theme }) => theme.media.lteMedium} {
+    width: 48%;
+  }
 `;
 
 export const CardHeader = styled.div`

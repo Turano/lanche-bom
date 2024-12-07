@@ -4,11 +4,11 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 10px;
-  margin-top: 110px;
+  margin-top: 12rem;
 
   @media ${({ theme }) => theme.media.lteMedium} {
     margin: 0 5rem;
-    margin-top: 110px;
+    margin-top: 15rem;
   }
 `;
 
