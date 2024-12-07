@@ -16,8 +16,8 @@ export const Cart = () => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery({ query: theme.media.lteMedium });
 
-  const handleDecrement = (id: string, quantity: number) => () => {
-    if (quantity === 1) {
+  const handleDecrement = (id: string, quantidade: number) => () => {
+    if (quantidade === 1) {
       dispatch({
         type: 'REMOVE_FROM_CART',
         payload: id,
@@ -29,24 +29,24 @@ export const Cart = () => {
       type: 'UPDATE_QUANTITY',
       payload: {
         id: id,
-        quantity: quantity - 1,
+        quantidade: quantidade - 1,
       },
     });
   };
 
-  const handleIncrement = (id: string, quantity: number) => () => {
+  const handleIncrement = (id: string, quantidade: number) => () => {
     dispatch({
       type: 'UPDATE_QUANTITY',
       payload: {
         id: id,
-        quantity: quantity + 1,
+        quantidade: quantidade + 1,
       },
     });
   };
 
   const total = state.items.reduce((acc, item) => {
-    const product = getCardapio.data?.find((data) => data.id === item.id);
-    return product ? acc + product.price * item.quantity : acc;
+    const product = getCardapio.data?.find((data) => data.id === item.item);
+    return product ? acc + product.preco * item.quantidade : acc;
   }, 0);
 
   return (
@@ -70,7 +70,7 @@ export const Cart = () => {
           >
             {state.items.map((item, index) => {
               const product = getCardapio.data?.find(
-                (data) => data.id === item.id,
+                (data) => data.id === item.item,
               );
               return product ? (
                 <div
@@ -86,9 +86,9 @@ export const Cart = () => {
                   }
                 >
                   <Card
-                    name={product.name}
-                    price={product.price}
-                    description={product.description}
+                    nome={product.nome}
+                    price={product.preco}
+                    description={product.descricao}
                     imgUrl={product.imgUrl}
                     onClick={() => {}}
                     alt={product.alt}
@@ -96,16 +96,16 @@ export const Cart = () => {
                   <ButtonGroupContainer>
                     <Button
                       borderRadius="left"
-                      onClick={handleDecrement(product.id, item.quantity)}
+                      onClick={handleDecrement(product.id, item.quantidade)}
                     >
                       -
                     </Button>
                     <Button isMiddle disabled={true}>
-                      {item.quantity}
+                      {item.quantidade}
                     </Button>
                     <Button
                       borderRadius="right"
-                      onClick={handleIncrement(product.id, item.quantity)}
+                      onClick={handleIncrement(product.id, item.quantidade)}
                     >
                       +
                     </Button>

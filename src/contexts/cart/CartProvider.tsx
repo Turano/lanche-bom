@@ -5,18 +5,20 @@ import { cartReducer, CartState } from './cartReducer';
 const initialState: CartState = {
   items: [],
   userId: '',
-  name: '',
+  nome: '',
   tel: '',
-  cep: '',
+  bairro: '',
   rua: '',
   numero: '',
   complemento: '',
   tipoEntrega: 'entrega',
+  primeiroPedido: true,
 };
 
 // Função para gerar um ID único
 const generateUserId = (): string => {
-  return crypto.randomUUID(); // Alternativa: usar uma função customizada ou biblioteca como 'uuid'
+  const uuid = crypto.randomUUID();
+  return uuid.replace(/-/g, '');
 };
 
 // Carrega o estado inicial do localStorage, gerando um `userId` se necessário

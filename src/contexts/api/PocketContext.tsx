@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Categoria, Info, Item, SelectedItem } from '../../types';
+import { Categoria, Info, Item, Pedido, User } from '../../types';
 import { UseMutationResult, UseQueryResult } from 'react-query';
 
 // Contexto e Provider
@@ -8,16 +8,8 @@ export interface PocketContextProps {
     void,
     Error,
     {
-      userId: string;
-      name: string;
-      tel: string;
-      cep?: string;
-      rua?: string;
-      numero?: string;
-      complemento?: string;
-      tipoEntrega: 'entrega' | 'retirada';
-      itensSelecionados: SelectedItem[];
-      status: 'Em preparo';
+      pedidoInfo: Pedido;
+      user: User;
     }
   >;
   getCardapio: UseQueryResult<Item[], Error>;
