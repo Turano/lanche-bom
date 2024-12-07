@@ -10,7 +10,6 @@ export type CartState = {
   numero?: string;
   complemento?: string;
   tipoEntrega: 'entrega' | 'retirada';
-  primeiroPedido: boolean;
 };
 
 export type CartAction =
@@ -28,7 +27,6 @@ export type CartAction =
         bairro?: string;
         complemento?: string;
         tipoEntrega: 'entrega' | 'retirada';
-        primeiroPedido?: boolean;
       };
     };
 

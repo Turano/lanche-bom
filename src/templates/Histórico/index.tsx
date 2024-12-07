@@ -27,36 +27,41 @@ export const Histórico: React.FC = () => {
   console.log(data);
 
   return (
-    <div>
+    <>
       <Typography as="h3" weight="bold" size="medium">
         Pedidos
       </Typography>
-      {data?.map((item) => (
-        <HistoryCard key={item.id}>
-          <CardHeader>
-            <span>{formatDate(item.created)}</span>
-            <span>{item.status}</span>
-          </CardHeader>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2%' }}>
+        {data?.map((item) => (
+          <HistoryCard key={item.id}>
+            <CardHeader>
+              <span>{formatDate(item.created)}</span>
+              <span>{item.status}</span>
+            </CardHeader>
 
-          <CardBody>
-            {item.expand.itens.map((item, index) => (
-              <p key={index}>
-                {item.quantidade}x {item.expand.item.nome}
-              </p>
-            ))}
-          </CardBody>
+            <CardBody>
+              {item.expand.itens.map((item, index) => (
+                <p key={index}>
+                  {item.quantidade}x {item.expand.item.nome}
+                </p>
+              ))}
+            </CardBody>
 
-          <CardFooter>
-            <span>R$ {item.precoTotal.toFixed(2)}</span>
-            <div>
-              <Button>Cancelar</Button>
-            </div>
-            <div>
-              <Button primary>Peça de novo</Button>
-            </div>
-          </CardFooter>
-        </HistoryCard>
-      ))}
-    </div>
+            <CardFooter>
+              <Typography as="span" size="small">
+                R$ {item.precoTotal.toFixed(2)}
+              </Typography>
+              <div>
+                {item.status === 'Finalizado' ? null : (
+                  <Button>Cancelar</Button>
+                )}
+
+                <Button primary>Peça de novo</Button>
+              </div>
+            </CardFooter>
+          </HistoryCard>
+        ))}
+      </div>
+    </>
   );
 };

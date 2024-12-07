@@ -1,4 +1,4 @@
-import { StyledButton } from './styles';
+import { Loader, StyledButton } from './styles';
 
 export type BorderRadiusType = 'left' | 'right' | 'both' | 'none';
 
@@ -10,6 +10,7 @@ export interface ButtonProps {
   type?: 'button' | 'submit';
   form?: string;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,7 +21,9 @@ export const Button: React.FC<ButtonProps> = ({
   type = 'button',
   form,
   disabled,
+  isLoading = false,
 }) => {
+  if (isLoading) disabled = true;
   return (
     <StyledButton
       onClick={onClick}
@@ -30,7 +33,7 @@ export const Button: React.FC<ButtonProps> = ({
       form={form}
       disabled={disabled}
     >
-      {children}
+      {isLoading ? <Loader /> : children}
     </StyledButton>
   );
 };

@@ -100,7 +100,7 @@ export const Item = (props: ItemProps) => {
   }
 
   return (
-    <div>
+    <div style={{ marginTop: '1rem' }}>
       <Image src={item.imgUrl} alt="placeholder" width="75%" border="2px" />
       <Typography size="large" as="h2" weight="bold" uppercase align="center">
         {item.nome}

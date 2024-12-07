@@ -25,52 +25,29 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
         throw new Error('A lanchonete está fechada no momento.');
       }
 
-      let enderecoId;
+      const userExists = await pb.collection('users').getFirstListItem('', {
+        filter: `id = "${user.id}"`,
+      });
 
-      if (user.primeiroPedido) {
-        if (user.tipoEntrega === 'entrega') {
-          const endereco = await pb.collection('enderecos').create({
-            rua: user.rua,
-            numero: user.numero,
-            complemento: user.complemento,
-            bairro: user.bairro,
-          });
-          enderecoId = endereco.id;
-        }
-
+      if (!userExists) {
         await pb.collection('users').create({
           id: user.id,
           nome: user.nome,
           telefone: user.tel,
-          endereco: enderecoId,
+          rua: user.rua,
+          numero: user.numero,
+          complemento: user.complemento,
+          bairro: user.bairro,
         });
       } else {
         if (user.tipoEntrega === 'entrega') {
-          const endereco = await pb.collection('users').getFirstListItem('', {
-            filter: `id = "${user.id}"`,
-          });
-
-          if (!endereco.endereco) {
-            enderecoId = await pb.collection('enderecos').create({
-              rua: user.rua,
-              numero: user.numero,
-              complemento: user.complemento,
-              bairro: user.bairro,
-            });
-          } else {
-            enderecoId = await pb
-              .collection('enderecos')
-              .update(endereco.endereco, {
-                rua: user.rua,
-                numero: user.numero,
-                complemento: user.complemento,
-                bairro: user.bairro,
-              });
-          }
           await pb.collection('users').update(user.id, {
             nome: user.nome,
             telefone: user.tel,
-            endereco: enderecoId,
+            rua: user.rua,
+            numero: user.numero,
+            complemento: user.complemento,
+            bairro: user.bairro,
           });
         } else {
           await pb.collection('users').update(user.id, {

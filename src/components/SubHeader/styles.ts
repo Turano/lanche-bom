@@ -2,15 +2,16 @@ import { IoArrowBack, IoClose } from 'react-icons/io5';
 import styled from 'styled-components';
 
 export const StyledCloseIcon = styled(IoClose)`
-  width: 50px;
-  height: 50px;
+  padding-left: 1rem;
+  width: 4rem;
+  height: 4rem;
   display: block; /* Garante que não haverá espaço indesejado ao redor do ícone */
 `;
 
 export const StyledBackIcon = styled(IoArrowBack)`
-  padding-left: 10px;
-  width: 40px;
-  height: 40px;
+  padding-left: 1rem;
+  width: 4rem;
+  height: 4rem;
   display: block; /* Garante que não haverá espaço indesejado ao redor do ícone */
 `;
 

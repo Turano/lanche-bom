@@ -9,7 +9,6 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
   width: 35px;
-  height: 35px;
   padding: 0;
   margin: 0;
   color: #333;
@@ -20,6 +19,6 @@ export const Button = styled.button`
 `;
 
 export const SearchIcon = styled(FaSearch)`
-  width: 20px;
-  height: 20px;
+  width: 2rem;
+  height: 2rem;
 `;

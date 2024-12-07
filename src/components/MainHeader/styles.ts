@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Logo = styled.img`
-  width: auto;  // Ajuste o tamanho conforme necessário
-  height: 30px;
+  height: 4rem;
 `;
 
 export const HeaderContainer = styled.header`
@@ -10,7 +9,7 @@ export const HeaderContainer = styled.header`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.primary};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

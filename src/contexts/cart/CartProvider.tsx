@@ -12,7 +12,6 @@ const initialState: CartState = {
   numero: '',
   complemento: '',
   tipoEntrega: 'entrega',
-  primeiroPedido: true,
 };
 
 // Função para gerar um ID único
