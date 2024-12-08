@@ -25,9 +25,18 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
         throw new Error('A lanchonete está fechada no momento.');
       }
 
-      const userExists = await pb.collection('users').getFirstListItem('', {
-        filter: `id = "${user.id}"`,
-      });
+      console.log('aqui');
+
+      let userExists;
+
+      try {
+        userExists = await pb.collection('users').getFirstListItem('', {
+          filter: `id = "${user.id}"`,
+        });
+      } catch (error) {
+        console.error('Primeiro pedido do usuário:', error);
+        userExists = false;
+      }
 
       if (!userExists) {
         await pb.collection('users').create({
