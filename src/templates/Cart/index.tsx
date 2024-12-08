@@ -98,16 +98,22 @@ export const Cart = () => {
                       borderRadius="left"
                       onClick={handleDecrement(product.id, item.quantidade)}
                     >
-                      -
+                      <Typography as="span" size="small">
+                        -
+                      </Typography>
                     </Button>
                     <Button isMiddle disabled={true}>
-                      {item.quantidade}
+                      <Typography as="span" size="small">
+                        {item.quantidade}
+                      </Typography>
                     </Button>
                     <Button
                       borderRadius="right"
                       onClick={handleIncrement(product.id, item.quantidade)}
                     >
-                      +
+                      <Typography as="span" size="small">
+                        +
+                      </Typography>
                     </Button>
                   </ButtonGroupContainer>
                   <Break />

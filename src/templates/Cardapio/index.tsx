@@ -34,7 +34,7 @@ export const Cardapio: React.FC = () => {
 
   if (isItemModalOpen) {
     return (
-      <Modal isOpen={isItemModalOpen} onClose={closeItemModal}>
+      <Modal isOpen={isItemModalOpen}>
         <Item closeModal={closeItemModal} />
       </Modal>
     );

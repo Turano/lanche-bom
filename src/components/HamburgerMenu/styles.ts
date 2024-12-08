@@ -13,7 +13,7 @@ export const MenuContainer = styled.div`
 export const MenuBar = styled.div<{ open: boolean }>`
   width: 100%;
   height: 4px;
-  background-color: ${({ open }) => (open ? 'transparent' : '#333')};
+  background-color: ${({ open }) => (open ? 'transparent' : ({ theme }) => theme.colors.text)};
   transition: all 0.3s ease-in-out;
   position: relative;
 
@@ -22,7 +22,7 @@ export const MenuBar = styled.div<{ open: boolean }>`
     content: '';
     width: 100%;
     height: 4px;
-    background-color: #333;
+    background-color: ${({ theme }) => theme.colors.text};
     position: absolute;
     transition: all 0.3s ease-in-out;
   }

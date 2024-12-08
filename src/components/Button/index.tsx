@@ -11,6 +11,7 @@ export interface ButtonProps {
   form?: string;
   disabled?: boolean;
   isLoading?: boolean;
+  bgColor?: 'primary' | 'white';
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -22,6 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   form,
   disabled,
   isLoading = false,
+  bgColor = 'primary',
 }) => {
   if (isLoading) disabled = true;
   return (
@@ -32,6 +34,7 @@ export const Button: React.FC<ButtonProps> = ({
       type={type}
       form={form}
       disabled={disabled}
+      bgColor={bgColor}
     >
       {isLoading ? <Loader /> : children}
     </StyledButton>

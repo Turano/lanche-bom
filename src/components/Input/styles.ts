@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 // Estilos
 export const InputWrapper = styled.div`
@@ -26,11 +26,11 @@ export const StyledInput = styled.input`
 
   &:focus + label,
   &:not(:placeholder-shown) + label {
-    top: -8px;
+    top: -10px;
     left: 12px;
     font-size: ${({ theme }) => theme.font.sizes.small};
-    color: ${({ theme }) => theme.colors.primary};
-    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.text};
+    background-color: ${({ theme }) => theme.colors.bgColor};
     padding: 0 4px;
   }
 `;
@@ -46,4 +46,3 @@ export const StyledLabel = styled.label`
   pointer-events: none;
   background-color: transparent;
 `;
-

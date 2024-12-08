@@ -74,6 +74,8 @@ export const Item = (props: ItemProps) => {
           value={obs}
         />
 
+        <div style={{ marginBottom: '8rem' }} />
+
         <div
           style={{
             position: 'fixed',
@@ -85,14 +87,24 @@ export const Item = (props: ItemProps) => {
             display: 'flex',
           }}
         >
-          <Button onClick={handleDecrement} borderRadius="left">
-            -
+          <Button onClick={handleDecrement} borderRadius="left" bgColor="white">
+            <Typography as="span" size="small">
+              -
+            </Typography>
           </Button>
           <Button onClick={handleAddToCart} isMiddle={true}>
-            {count.toString()} - R$ {(count * item.preco).toFixed(2)}
+            <Typography as="span" size="small">
+              {count.toString()} - R$ {(count * item.preco).toFixed(2)}
+            </Typography>
           </Button>
-          <Button onClick={handleIncrement} borderRadius="right">
-            +
+          <Button
+            onClick={handleIncrement}
+            borderRadius="right"
+            bgColor="white"
+          >
+            <Typography as="span" size="small">
+              +
+            </Typography>
           </Button>
         </div>
       </div>
@@ -126,16 +138,20 @@ export const Item = (props: ItemProps) => {
           display: 'flex',
         }}
       >
-        <Button onClick={handleDecrement} borderRadius="left">
-          -
+        <Button onClick={handleDecrement} borderRadius="left" bgColor="white">
+          <Typography as="span" size="small">
+            -
+          </Typography>
         </Button>
         <Button onClick={handleAddToCart} isMiddle={true}>
-          <Typography as="p" size="small">
+          <Typography as="span" size="small">
             {count.toString()} - R$ {(count * item.preco).toFixed(2)}
           </Typography>
         </Button>
-        <Button onClick={handleIncrement} borderRadius="right">
-          +
+        <Button onClick={handleIncrement} borderRadius="right" bgColor="white">
+          <Typography as="span" size="small">
+            +
+          </Typography>
         </Button>
       </div>
     </div>

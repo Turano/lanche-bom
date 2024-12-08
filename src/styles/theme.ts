@@ -3,13 +3,17 @@ import { DefaultTheme } from 'styled-components';
 export const defaultTheme: DefaultTheme = {
   name: 'default',
   colors: {
-    primary: '#EAB632',
+    primary: '#FFC100',
+    primaryHover: '#FFD700',
     secondary: '#8E1504',
+    secondaryHover: '#BA1A07',
     tertiary: '#BA8379',
     text: '#000000',
     white: '#FFFFFF',
+    whiteHover: '#EEEEEE',
     darkerGray: '#AAAAAA',
     mainBg: '#EDEDED',
+    disabled: '#D3D3D3',
   },
   font: {
     family: {
@@ -45,12 +49,16 @@ export const invertedTheme: DefaultTheme = {
   name: 'inverted',
   colors: {
     primary: '#8E1504',
+    primaryHover: '#BA1A07',
     secondary: '#EAB632',
+    secondaryHover: '#FFC100',
     tertiary: '#8E8379',
     text: '#FFFFFF', // Inverte o texto para claro
     white: '#333333', // Fundo escuro
+    whiteHover: '#555555', // Fundo escuro
     darkerGray: '#222222',
     mainBg: '#121212',
+    disabled: '#555555',
   },
   font: {
     family: {

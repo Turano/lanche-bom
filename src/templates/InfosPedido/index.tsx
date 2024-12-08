@@ -35,13 +35,12 @@ export const InfosPedido: React.FC = () => {
   const tel = watch('tel');
   const rua = watch('rua');
   const numero = watch('numero');
-  const complemento = watch('complemento');
   const bairro = watch('bairro');
 
   const isFormValid =
     tipoEntrega === 'retirada'
       ? name && tel
-      : name && tel && rua && numero && complemento && bairro;
+      : name && tel && rua && numero && bairro;
 
   return (
     <>

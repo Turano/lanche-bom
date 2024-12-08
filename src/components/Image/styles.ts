@@ -10,6 +10,6 @@ export const Image = styled.img<{
     height: ${heigth};
     width: ${width};
     border-radius: ${borderRadius || theme.sizes.radius};
-    border: ${border} solid black;
+    border: ${border} solid ${({ theme }) => theme.colors.text};
   `}
 `;
