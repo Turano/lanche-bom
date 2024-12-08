@@ -6,6 +6,7 @@ export const StyledCloseIcon = styled(IoClose)`
   width: 4rem;
   height: 4rem;
   display: block; /* Garante que não haverá espaço indesejado ao redor do ícone */
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const StyledBackIcon = styled(IoArrowBack)`
@@ -13,6 +14,7 @@ export const StyledBackIcon = styled(IoArrowBack)`
   width: 4rem;
   height: 4rem;
   display: block; /* Garante que não haverá espaço indesejado ao redor do ícone */
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const StyledButton = styled.button`

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const HistoryCard = styled.div`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
@@ -23,11 +23,11 @@ export const CardHeader = styled.div`
   font-size: 14px;
 
   span {
-    color: #333;
+    color: ${({ theme }) => theme.colors.text}; // Cor do texto
   }
 
   span:last-child {
-    color: ${({ theme }) => theme.colors.primary || '#8b0000'}; // Cor do status
+    color: ${({ theme }) => theme.colors.secondary || '#8b0000'}; // Cor do status
   }
 `;
 
@@ -38,7 +38,7 @@ export const CardBody = styled.div`
 
   p {
     font-size: 14px;
-    color: #555;
+    color: ${({ theme }) => theme.colors.text};
   }
 `;
 
@@ -50,7 +50,7 @@ export const CardFooter = styled.div`
 
   span {
     font-weight: bold;
-    color: #333;
+    color: ${({ theme }) => theme.colors.text};
   }
 
   div {
@@ -64,8 +64,8 @@ interface ButtonProps {
 }
 
 export const Button = styled.button<ButtonProps>`
-  background-color: ${({ primary }) => (primary ? '#8b0000' : '#ccc')};
-  color: ${({ primary }) => (primary ? '#fff' : '#333')};
+  background-color: ${({ primary, theme }) => (primary ? theme.colors.secondary : '#ccc')};
+  color: ${({ primary, theme }) => (primary ? theme.colors.white : '#333')};
   border: none;
   border-radius: 4px;
   padding: 8px 16px;

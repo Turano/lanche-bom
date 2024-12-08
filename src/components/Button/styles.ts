@@ -23,16 +23,16 @@ export const Loader = styled.div`
 
 // Estilização do botão com base nas propriedades
 export const StyledButton = styled.button.withConfig({
-  shouldForwardProp: (prop) => !['isMiddle', 'borderRadius'].includes(prop),
+  shouldForwardProp: (prop) =>
+    !['isMiddle', 'borderRadius', 'bgColor'].includes(prop),
 })<ButtonProps>`
   background-color: ${(props) =>
     props.disabled
-      ? '#d3d3d3' // Cinza claro para estado desabilitado
-      : props.isMiddle
-        ? '#f0f0f0' // Cinza para o meio
-        : '#f4c242'}; /* Amarelo para bordas */
-  color: ${(props) => (props.isMiddle ? 'black' : 'black')}; /* Cor do texto */
-  border: 1px solid ${(props) => (props.disabled ? '#a0a0a0' : 'black')};
+      ? ({ theme }) => theme.colors.disabled // Cinza para desabilitado
+      : props.bgColor === 'primary'
+        ? ({ theme }) => theme.colors.primary // Cinza para o meio
+        : ({ theme }) => theme.colors.white}; /* Amarelo para bordas */
+  border: 1px solid ${(props) => (props.disabled ? '#a0a0a0' : ({ theme }) => theme.colors.text)};
   border-radius: ${(props) => {
     switch (props.borderRadius) {
       case 'left':
@@ -57,18 +57,9 @@ export const StyledButton = styled.button.withConfig({
   &:hover {
     background-color: ${(props) =>
       props.disabled
-        ? '#d3d3d3' // Não altera no hover se estiver desabilitado
-        : props.isMiddle
-          ? '#e6e6e6'
-          : '#ddb12e'}; /* Hover mais claro */
-  }
-
-  &:active {
-    background-color: ${(props) =>
-      props.disabled
-        ? '#d3d3d3' // Não altera no active se estiver desabilitado
-        : props.isMiddle
-          ? '#dcdcdc'
-          : '#c9941f'}; /* Cor ao pressionar */
+        ? '' // Não altera no hover se estiver desabilitado
+        : props.bgColor === 'primary'
+          ? ({ theme }) => theme.colors.primaryHover
+          : ({ theme }) => theme.colors.whiteHover};
   }
 `;

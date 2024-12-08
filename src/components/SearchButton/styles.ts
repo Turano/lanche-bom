@@ -19,6 +19,8 @@ export const Button = styled.button`
 `;
 
 export const SearchIcon = styled(FaSearch)`
+  color: ${({ theme }) => theme.colors.text};
+  transition: color 0.3s ease;
   width: 2rem;
   height: 2rem;
 `;
