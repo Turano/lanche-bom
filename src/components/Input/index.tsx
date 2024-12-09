@@ -1,24 +1,50 @@
-import React, { forwardRef } from 'react';
-import { InputWrapper, StyledInput, StyledLabel } from './styles';
+import React from 'react';
+import { ErrorMessage, StyledInputMask, StyledLabel } from './styles';
+import { Controller, useFormContext } from 'react-hook-form';
 
-type InputProps = {
-  placeholder?: string;
+interface InputProps {
+  name: string;
+  mask?: string | Array<string | RegExp>;
+  alwaysShowMask?: boolean;
   type?: string;
-  children: React.ReactNode;
-};
+  placeholder?: string;
+  rules?: object;
+}
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ placeholder = '', type = 'text', children, ...rest }, ref) => {
-    return (
-      <InputWrapper>
-        <StyledInput
-          ref={ref}
-          type={type}
-          placeholder={placeholder} // Necessário para o rótulo flutuante
-          {...rest} // Garante que os valores do react-hook-form sejam passados
-        />
-        <StyledLabel>{children}</StyledLabel>
-      </InputWrapper>
-    );
-  },
-);
+export const Input: React.FC<InputProps> = ({
+  name,
+  mask = '',
+  alwaysShowMask = false,
+  type = 'text',
+  placeholder,
+  rules = {},
+}) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      render={({ field }) => (
+        <>
+          <StyledInputMask
+            {...field}
+            mask={mask}
+            type={type}
+            placeholder=""
+            error={!!errors[name]}
+            alwaysShowMask={alwaysShowMask}
+            maskPlaceholder=""
+          />
+          <StyledLabel>{placeholder}</StyledLabel>
+          {errors[name] && (
+            <ErrorMessage>{String(errors[name]?.message)}</ErrorMessage>
+          )}
+        </>
+      )}
+    />
+  );
+};

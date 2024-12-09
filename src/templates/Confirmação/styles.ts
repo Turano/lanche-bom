@@ -3,8 +3,11 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px;
-  margin-bottom: 80px;
+  margin: 0 2rem;
+  @media ${({ theme }) => theme.media.lteMedium} {
+    margin: 0 20rem;
+  }
+  margin-bottom: 5rem;
 `;
 
 export const ItemContainer = styled.div`

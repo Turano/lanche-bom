@@ -16,6 +16,7 @@ import { CardapioProvider } from './contexts/cardapio/CardapioProvider.tsx';
 import { PocketProvider } from './contexts/api/PocketProvider.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ResetTabFocus } from './utils/ResetTabFocus.ts';
+import { NotFound } from './templates/NotFound/index.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +48,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="/pedido" element={<InfosPedido />} />
                     <Route path="/confirmar" element={<Confirmação />} />
                     <Route path="/historico" element={<Histórico />} />
+                    <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Wrapper>
               </Router>
