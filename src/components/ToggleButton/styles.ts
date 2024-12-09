@@ -1,9 +1,9 @@
-import styled, { css } from "styled-components";
-import { ToggleButtonProps } from ".";
+import styled, { css } from 'styled-components';
+import { ToggleButtonProps } from '.';
 
 // Estilização do botão selecionável
 export const ButtonWrapper = styled.button.withConfig({
-  shouldForwardProp: (prop) => !["isSelected", "borderRadius"].includes(prop)
+  shouldForwardProp: (prop) => !['isSelected', 'borderRadius'].includes(prop),
 })<ToggleButtonProps>`
   padding: 10px 20px;
   flex-grow: 1;
@@ -15,14 +15,14 @@ export const ButtonWrapper = styled.button.withConfig({
   border: 1px solid ${({ theme }) => theme.colors.text};
   border-radius: ${(props) => {
     switch (props.borderRadius) {
-      case "left":
-        return "30px 0 0 30px";
-      case "right":
-        return "0 30px 30px 0";
-      case "both":
-        return "30px";
+      case 'left':
+        return '30px 0 0 30px';
+      case 'right':
+        return '0 30px 30px 0';
+      case 'both':
+        return '30px';
       default:
-        return "0";
+        return '0';
     }
   }};
   cursor: pointer;

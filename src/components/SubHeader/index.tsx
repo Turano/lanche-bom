@@ -102,6 +102,21 @@ export const SubHeader: React.FC = () => {
     }
   };
 
+  if (
+    location.pathname !== '/carrinho' &&
+    location.pathname !== '/confirmar' &&
+    location.pathname !== '/historico' &&
+    location.pathname !== '/pedido'
+  )
+    return null;
+
+  const subHeaderTitle = {
+    '/carrinho': 'Carrinho',
+    '/confirmar': 'Confirmar pedido',
+    '/historico': 'Meus Pedidos',
+    '/pedido': 'Pedido',
+  };
+
   return (
     <Container>
       <StyledButton onClick={handleClick}>
@@ -112,7 +127,7 @@ export const SubHeader: React.FC = () => {
         )}
       </StyledButton>
       <Typography weight="bold" as="h2" align="center" size="medium">
-        Carrinho
+        {subHeaderTitle[location.pathname]}
       </Typography>
       <div />
     </Container>

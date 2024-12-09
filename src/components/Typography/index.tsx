@@ -3,7 +3,7 @@ import * as Styled from './styles';
 
 export type TypographyProps = {
   children: React.ReactNode;
-  colorDark?: boolean;
+  color?: string;
   as?: 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'huge';
   uppercase?: boolean;
@@ -16,7 +16,7 @@ export type TypographyProps = {
 
 export const Typography = ({
   children,
-  colorDark = true,
+  color = '',
   as = 'p',
   size = 'medium',
   uppercase = false,
@@ -29,7 +29,7 @@ export const Typography = ({
 
   return (
     <Styled.Text
-      colorDark={colorDark}
+      color={color}
       as={as}
       size={size}
       uppercase={uppercase}

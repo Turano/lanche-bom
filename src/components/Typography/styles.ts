@@ -34,7 +34,7 @@ const textWeight = (weight: TypographyProps['weight']) => css`
 export const Text = styled.p.withConfig({
   shouldForwardProp: (prop) =>
     ![
-      'colorDark',
+      'color',
       'size',
       'uppercase',
       'weight',
@@ -45,7 +45,7 @@ export const Text = styled.p.withConfig({
 })<TypographyProps>`
   ${({
     theme,
-    colorDark,
+    color,
     size = 'medium',
     uppercase = false,
     weight,
@@ -55,7 +55,7 @@ export const Text = styled.p.withConfig({
     fontSize,
   }) => css`
     font-size: ${fontSize ? `${fontSize}px` : 'inherit'};
-    color: ${colorDark ? theme.colors.text : theme.colors.white};
+    color: ${color !== '' ? color : theme.colors.text};
     ${textSize[size](theme)};
     ${textTransform(uppercase)};
     ${textWeight(weight)};

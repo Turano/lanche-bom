@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MenuContainer, MenuBar } from './styles';
 
-export const HamburgerMenu: React.FC = () => {
-  const [open, setOpen] = useState(false);
+interface HamburgerMenuProps {
+  onClick: () => void;
+  open: boolean;
+}
 
-  const toggleMenu = () => {
-    setOpen(!open);
-  };
-
+export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
+  onClick,
+  open,
+}) => {
   return (
-    <MenuContainer onClick={toggleMenu}>
+    <MenuContainer onClick={onClick}>
       <MenuBar open={open} />
     </MenuContainer>
   );

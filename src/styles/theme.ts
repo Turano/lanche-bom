@@ -12,6 +12,7 @@ export const defaultTheme: DefaultTheme = {
     white: '#FFFFFF',
     whiteHover: '#EEEEEE',
     darkerGray: '#AAAAAA',
+    whiterGray: '#AAAAAA',
     mainBg: '#EDEDED',
     disabled: '#D3D3D3',
   },
@@ -57,6 +58,7 @@ export const invertedTheme: DefaultTheme = {
     white: '#333333', // Fundo escuro
     whiteHover: '#555555', // Fundo escuro
     darkerGray: '#222222',
+    whiterGray: '#444444',
     mainBg: '#121212',
     disabled: '#555555',
   },
