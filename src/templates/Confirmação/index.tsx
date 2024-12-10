@@ -66,7 +66,10 @@ export const Confirmação = () => {
               (data) => data.id === item.item,
             );
             return (
-              <li key={item.item} style={{ listStyleType: 'none' }}>
+              <li
+                key={`${item.item}${item.obs}`}
+                style={{ listStyleType: 'none' }}
+              >
                 <ItemContainer>
                   <Typography size="small">
                     {item.quantidade}x {product?.nome}
@@ -76,7 +79,9 @@ export const Confirmação = () => {
                   </Typography>
                 </ItemContainer>
                 {item.obs ? (
-                  <Typography size="small">-&gt; Obs: {item.obs}</Typography>
+                  <Typography size="small">
+                    &emsp;-&gt; Obs: {item.obs}
+                  </Typography>
                 ) : null}
               </li>
             );

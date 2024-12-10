@@ -63,7 +63,9 @@ interface ButtonProps {
   primary?: boolean;
 }
 
-export const Button = styled.button<ButtonProps>`
+export const Button = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'primary',
+})<ButtonProps>`
   background-color: ${({ primary, theme }) => (primary ? theme.colors.secondary : '#ccc')};
   color: ${({ primary, theme }) => (primary ? theme.colors.white : '#333')};
   border: none;

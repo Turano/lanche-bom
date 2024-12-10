@@ -1,4 +1,5 @@
-import { Button } from './styles';
+import { useCart } from '../../contexts/cart';
+import { Button, ButtonWrapper, CartCount } from './styles';
 import { FaCartShopping } from 'react-icons/fa6';
 
 interface CartButtonProps {
@@ -6,9 +7,14 @@ interface CartButtonProps {
 }
 
 export const CartButton = (props: CartButtonProps) => {
+  const { state } = useCart();
+
   return (
-    <Button onClick={props.onClick}>
-      <FaCartShopping size={24} />
-    </Button>
+    <ButtonWrapper>
+      <Button onClick={props.onClick}>
+        <FaCartShopping size={24} />
+      </Button>
+      <CartCount>{state.items.length}</CartCount>
+    </ButtonWrapper>
   );
 };

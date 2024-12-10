@@ -16,33 +16,39 @@ export const Cart = () => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery({ query: theme.media.lteMedium });
 
-  const handleDecrement = (id: string, quantidade: number) => () => {
-    if (quantidade === 1) {
+  const handleDecrement =
+    (id: string, quantidade: number, obs: string = '') =>
+    () => {
+      if (quantidade === 1) {
+        dispatch({
+          type: 'REMOVE_FROM_CART',
+          payload: { id: id, obs: obs },
+        });
+        return;
+      }
+
       dispatch({
-        type: 'REMOVE_FROM_CART',
-        payload: id,
+        type: 'UPDATE_QUANTITY',
+        payload: {
+          id: id,
+          quantidade: quantidade - 1,
+          obs: obs,
+        },
       });
-      return;
-    }
+    };
 
-    dispatch({
-      type: 'UPDATE_QUANTITY',
-      payload: {
-        id: id,
-        quantidade: quantidade - 1,
-      },
-    });
-  };
-
-  const handleIncrement = (id: string, quantidade: number) => () => {
-    dispatch({
-      type: 'UPDATE_QUANTITY',
-      payload: {
-        id: id,
-        quantidade: quantidade + 1,
-      },
-    });
-  };
+  const handleIncrement =
+    (id: string, quantidade: number, obs: string = '') =>
+    () => {
+      dispatch({
+        type: 'UPDATE_QUANTITY',
+        payload: {
+          id: id,
+          quantidade: Math.min(quantidade + 1, 20),
+          obs: obs,
+        },
+      });
+    };
 
   const total = state.items.reduce((acc, item) => {
     const product = getCardapio.data?.find((data) => data.id === item.item);
@@ -93,10 +99,17 @@ export const Cart = () => {
                     onClick={() => {}}
                     alt={product.alt}
                   />
+                  <Typography as="p" size="small">
+                    {item.obs ? `Observação: ${item.obs}` : null}
+                  </Typography>
                   <ButtonGroupContainer>
                     <Button
                       borderRadius="left"
-                      onClick={handleDecrement(product.id, item.quantidade)}
+                      onClick={handleDecrement(
+                        product.id,
+                        item.quantidade,
+                        item.obs,
+                      )}
                     >
                       <Typography as="span" size="small">
                         -
@@ -109,7 +122,11 @@ export const Cart = () => {
                     </Button>
                     <Button
                       borderRadius="right"
-                      onClick={handleIncrement(product.id, item.quantidade)}
+                      onClick={handleIncrement(
+                        product.id,
+                        item.quantidade,
+                        item.obs,
+                      )}
                     >
                       <Typography as="span" size="small">
                         +

@@ -51,4 +51,4 @@ export const CardPrice = styled.div`
 
 export const TestContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.text};
-  `;
+`;

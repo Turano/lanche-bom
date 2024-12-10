@@ -61,7 +61,10 @@ export const Cardapio: React.FC = () => {
             </Typography>
             <CardGroupContainer>
               {filteredItems?.map((item) => (
-                <div style={isMediumScreen ? { width: '48%' } : undefined}>
+                <div
+                  key={item.id}
+                  style={isMediumScreen ? { width: '48%' } : undefined}
+                >
                   <Card
                     onClick={(e: React.MouseEvent<HTMLDivElement>) =>
                       handleItemClick(e, item.id)

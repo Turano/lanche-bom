@@ -33,7 +33,7 @@ export const Item = (props: ItemProps) => {
   const [obs, setObs] = useState('');
 
   const handleDecrement = () => setCount((prev) => Math.max(prev - 1, 1));
-  const handleIncrement = () => setCount((prev) => prev + 1);
+  const handleIncrement = () => setCount((prev) => Math.min(prev + 1, 20));
 
   const handleAddToCart = () => {
     if (itemId) {

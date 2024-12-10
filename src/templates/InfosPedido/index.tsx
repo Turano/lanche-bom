@@ -31,7 +31,6 @@ export const InfosPedido: React.FC = () => {
   const { dispatch } = useCart();
 
   const onSubmit = (data: User) => {
-    console.log('aqui');
     dispatch({
       type: 'SET_INFO',
       payload:
@@ -51,8 +50,6 @@ export const InfosPedido: React.FC = () => {
         watch('rua') &&
         watch('numero') &&
         watch('bairro');
-
-  console.log('isFormValid', isFormValid);
 
   return (
     <Container>

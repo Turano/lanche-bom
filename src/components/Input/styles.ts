@@ -9,7 +9,9 @@ export const ErrorMessage = styled.span`
   color: ${({ theme }) => theme.colors.error || 'red'};
 `;
 
-export const StyledInputMask = styled(ReactInputMask)<{ error?: boolean }>`
+export const StyledInputMask = styled(ReactInputMask).withConfig({
+  shouldForwardProp: (prop) => prop !== 'error',
+})<{ error?: boolean }>`
   border: 1px solid ${(props) => (props.error ? 'red' : ({ theme }) => theme.colors.text)};
   width: 100%;
   height: 6rem;

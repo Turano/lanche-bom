@@ -33,13 +33,13 @@ export const AppThemeProvider = ({ children }: AppThemeProviderProps) => {
 
   // Funções para aumentar ou diminuir o tamanho da fonte no theme
   const adjustFontSize = (operation: 'increase' | 'decrease') => {
-    const factor = operation === 'increase' ? 1.2 : 0.8;
+    const factor = operation === 'increase' ? 0.2 : -0.2;
 
     // Função que vai aplicar o aumento ou diminuição em todos os tamanhos de fontes
     const adjustThemeFontSizes = (theme: typeof defaultTheme) => {
       const newFontSizes = Object.keys(theme.font.sizes).reduce(
         (acc: { [key: string]: string }, size) => {
-          acc[size] = `${parseFloat(theme.font.sizes[size]) * factor}rem`;
+          acc[size] = `${parseFloat(theme.font.sizes[size]) + factor}rem`;
           return acc;
         },
         {},

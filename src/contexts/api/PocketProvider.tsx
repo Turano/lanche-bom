@@ -25,8 +25,6 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
         throw new Error('A lanchonete está fechada no momento.');
       }
 
-      console.log('aqui');
-
       let userExists;
 
       try {
@@ -73,7 +71,7 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
             quantidade: item.quantidade,
             obs: item.obs,
           },
-          { requestKey: item.item },
+          { requestKey: `${item.item}${item.obs}` },
         ),
       );
 

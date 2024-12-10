@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { GlobalStyles } from './styles/global-styles';
 import { CartProvider, AppThemeProvider } from './contexts/index.tsx';
@@ -28,35 +27,33 @@ const queryClient = new QueryClient({
 });
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <AppThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <PocketProvider>
-          <CartProvider>
-            <CardapioProvider>
-              <Router>
-                <Headers>
-                  <ResetTabFocus />
-                  <MainHeader />
-                  <SubHeader />
-                </Headers>
-                <AccessibilityButton />
-                <Wrapper>
-                  <Routes>
-                    <Route path="/" element={<Cardapio />} />
-                    <Route path="/carrinho" element={<Cart />} />
-                    <Route path="/pedido" element={<InfosPedido />} />
-                    <Route path="/confirmar" element={<Confirmação />} />
-                    <Route path="/historico" element={<Histórico />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Wrapper>
-              </Router>
-              <GlobalStyles />
-            </CardapioProvider>
-          </CartProvider>
-        </PocketProvider>
-      </QueryClientProvider>
-    </AppThemeProvider>
-  </StrictMode>,
+  <AppThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <PocketProvider>
+        <CartProvider>
+          <CardapioProvider>
+            <Router>
+              <Headers>
+                <ResetTabFocus />
+                <MainHeader />
+                <SubHeader />
+              </Headers>
+              <AccessibilityButton />
+              <Wrapper>
+                <Routes>
+                  <Route path="/" element={<Cardapio />} />
+                  <Route path="/carrinho" element={<Cart />} />
+                  <Route path="/pedido" element={<InfosPedido />} />
+                  <Route path="/confirmar" element={<Confirmação />} />
+                  <Route path="/historico" element={<Histórico />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Wrapper>
+            </Router>
+            <GlobalStyles />
+          </CardapioProvider>
+        </CartProvider>
+      </PocketProvider>
+    </QueryClientProvider>
+  </AppThemeProvider>,
 );

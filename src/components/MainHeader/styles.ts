@@ -21,7 +21,9 @@ export const HeaderContainer = styled.header`
   height: fit-content;
 `;
 
-export const Modal = styled.div<{ isOpen: boolean }>`
+export const Modal = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isOpen',
+})<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;

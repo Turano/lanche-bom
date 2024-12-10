@@ -24,8 +24,6 @@ export const Histórico: React.FC = () => {
     return <Typography>Ocorreu um erro ao carregar o histórico</Typography>;
   }
 
-  console.log(data);
-
   return (
     <>
       <Typography as="h3" weight="bold" size="medium">
