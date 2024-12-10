@@ -35,9 +35,17 @@ export const MainHeader = () => {
         <Modal isOpen={isModalOpen}>
           <ModalContent onClick={(e) => e.stopPropagation()}>
             <NavOption
+              tabIndex={0}
               onClick={() => {
                 toggleModal();
                 navigate('/');
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault(); // Evita scroll ao pressionar barra de espaço
+                  toggleModal(); // Chama o toggle
+                  navigate('/');
+                }
               }}
             >
               <Typography size="large" color={'white'}>
@@ -45,16 +53,33 @@ export const MainHeader = () => {
               </Typography>
             </NavOption>
             <NavOption
+              tabIndex={0}
               onClick={() => {
                 toggleModal();
                 navigate('/historico');
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault(); // Evita scroll ao pressionar barra de espaço
+                  toggleModal(); // Chama o toggle
+                  navigate('/historico');
+                }
               }}
             >
               <Typography size="large" color={'white'}>
                 Meus pedidos
               </Typography>
             </NavOption>
-            <NavOption onClick={() => alert('Página em desenvolvimento')}>
+            <NavOption
+              tabIndex={0}
+              onClick={() => alert('Página em desenvolvimento')}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault(); // Evita scroll ao pressionar barra de espaço
+                  alert('Página em desenvolvimento');
+                }
+              }}
+            >
               <Typography size="large" color={'white'}>
                 Sobre nós
               </Typography>
