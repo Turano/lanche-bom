@@ -23,6 +23,7 @@ export const MainHeader = () => {
 
   return (
     <>
+      <div tabIndex={0} />
       <HeaderContainer>
         <HamburgerMenu onClick={toggleModal} open={isModalOpen} />
         <Logo
