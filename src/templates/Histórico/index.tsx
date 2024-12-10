@@ -39,9 +39,12 @@ export const Histórico: React.FC = () => {
 
             <CardBody>
               {item.expand.itens.map((item, index) => (
-                <p key={index}>
-                  {item.quantidade}x {item.expand.item.nome}
-                </p>
+                <div key={index}>
+                  <p>
+                    {item.quantidade}x {item.expand.item.nome}
+                  </p>
+                  {item.obs ? <p>&emsp;-&gt; {item.obs}</p> : null}
+                </div>
               ))}
             </CardBody>
 
