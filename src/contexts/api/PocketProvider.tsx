@@ -36,6 +36,7 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
       const isAberto = await pb.collection('config').getFirstListItem('');
 
       if (!isAberto.aberto) {
+        alert('A lanchonete está fechada no momento.');
         throw new Error('A lanchonete está fechada no momento.');
       }
 

@@ -64,7 +64,7 @@ interface ButtonProps {
   primary?: boolean;
 }
 
-export const Button = styled.button.withConfig({
+export const HistButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'primary',
 })<ButtonProps>`
   background-color: ${({ primary, theme }) => (primary ? theme.colors.secondary : '#ccc')};
@@ -120,19 +120,6 @@ export const ModalFooter = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-`;
-
-export const ModalButton = styled.button<{ primary?: boolean }>`
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  width: fit-content;
-
-  background: ${({ primary, theme }) => (primary ? theme.colors.primary : theme.colors.whiterGray)};
-  color: ${({ primary, theme }) => (primary ? theme.colors.text : theme.colors.white)};
-
 `;
 
 // Animação de rotação

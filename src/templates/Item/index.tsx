@@ -61,6 +61,7 @@ export const Item = (props: ItemProps) => {
     return (
       <div>
         <Image src={item.imgUrl} alt={item.alt} width="75%" border="2px" />
+
         <Typography size="large" as="h2" weight="bold" uppercase align="center">
           {item.nome}
         </Typography>
@@ -112,15 +113,26 @@ export const Item = (props: ItemProps) => {
   }
 
   return (
-    <div style={{ marginTop: '1rem' }}>
+    <div
+      style={{
+        marginTop: '1rem',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '4rem',
+        height: '100%',
+      }}
+    >
       <Image src={item.imgUrl} alt={item.alt} width="75%" border="2px" />
-      <Typography size="large" as="h2" weight="bold" uppercase align="center">
-        {item.nome}
-      </Typography>
-      <Typography size="small" as="p">
-        {item.descricao}
-      </Typography>
-
+      <div>
+        <Typography size="large" as="h2" weight="bold" uppercase align="center">
+          {item.nome}
+        </Typography>
+        <Typography size="small" as="p">
+          {item.descricao}
+        </Typography>
+      </div>
       <Textarea
         placeholder="Observações"
         onChange={handleChangeTextArea}

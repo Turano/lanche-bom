@@ -21,7 +21,7 @@ export const defaultTheme: DefaultTheme = {
       default: "'Roboto', sans-serif",
     },
     sizes: {
-      xsmall: '1rem', // Pequeno
+      xsmall: '1.4rem', // Pequeno
       small: '1.8rem', // Médio
       medium: '2.6rem', // Grande
       large: '3.2rem', // Maior
@@ -67,7 +67,7 @@ export const invertedTheme: DefaultTheme = {
       default: "'Roboto', sans-serif",
     },
     sizes: {
-      xsmall: '1rem',
+      xsmall: '1.4rem',
       small: '1.8rem',
       medium: '2.6rem',
       large: '3.2rem',

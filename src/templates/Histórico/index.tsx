@@ -8,9 +8,7 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Button,
   ModalFooter,
-  ModalButton,
   ModalContainer,
   ModalHeader,
   ModalOverlay,
@@ -19,6 +17,7 @@ import {
 } from './styles';
 import { Info } from '../../types';
 import { useState } from 'react';
+import { Button } from '../../components/Button';
 
 export const Histórico: React.FC = () => {
   const { state, dispatch } = useCart();
@@ -128,11 +127,24 @@ export const Histórico: React.FC = () => {
                 {item.status === 'Finalizado' ||
                 item.status === 'Cancelado' ||
                 item.desejaCancelar ? null : (
-                  <Button onClick={() => openModal(item.id)}>Cancelar</Button>
+                  <Button
+                    borderRadius="left"
+                    onClick={() => openModal(item.id)}
+                    bgColor="white"
+                  >
+                    <Typography size="xsmall" weight="bold">
+                      Cancelar
+                    </Typography>
+                  </Button>
                 )}
 
-                <Button primary onClick={() => handleReorder(item)}>
-                  Peça de novo
+                <Button
+                  borderRadius="right"
+                  onClick={() => handleReorder(item)}
+                >
+                  <Typography size="xsmall" weight="bold">
+                    Peça de novo
+                  </Typography>
                 </Button>
               </div>
             </CardFooter>
@@ -152,17 +164,23 @@ export const Histórico: React.FC = () => {
                 </Typography>
               </ModalBody>
               <ModalFooter>
-                <ModalButton onClick={closeModal}>
+                <Button
+                  borderRadius="both"
+                  bgColor="primary"
+                  onClick={closeModal}
+                >
                   <Typography>Voltar</Typography>
-                </ModalButton>
-                <ModalButton
-                  primary
+                </Button>
+                <Button
+                  isLoading={isCancelarLoading}
+                  borderRadius="both"
+                  bgColor="white"
                   onClick={() => selectedId && handleCancelar(selectedId)}
                 >
                   <Typography>
                     {isCancelarLoading ? <Loader /> : 'Cancelar'}
                   </Typography>
-                </ModalButton>
+                </Button>
               </ModalFooter>
             </ModalContainer>
           </ModalOverlay>
