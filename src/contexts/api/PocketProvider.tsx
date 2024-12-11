@@ -10,6 +10,20 @@ const pb = new PocketBase(pocketBaseUrl);
 export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const cancelarPedido = useMutation({
+    mutationFn: async (pedidoId: string): Promise<void> => {
+      await pb.collection('pedidos').update(pedidoId, {
+        desejaCancelar: true,
+      });
+    },
+    onSuccess: () => {
+      console.log('Requisição de cancelamento enviada!');
+    },
+    onError: (error: Error) => {
+      console.error('Erro ao cancelar o pedido:', error);
+    },
+  });
+
   // React Query para finalizar pedido
   const finalizarPedido = useMutation({
     mutationFn: async ({
@@ -146,6 +160,7 @@ export const PocketProvider: React.FC<{ children: React.ReactNode }> = ({
         useHistorico,
         getLogo,
         getCategorias,
+        cancelarPedido,
       }}
     >
       {children}

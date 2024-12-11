@@ -6,7 +6,6 @@ import {
   ModalContent,
   NavOption,
 } from './styles';
-import { SearchButton } from '../SearchButton';
 import { usePocket } from '../../contexts/api/usePocket';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +29,7 @@ export const MainHeader = () => {
           src={getLogo.data}
           alt="Logo do lanche bom: Uma tampinha de garrafa vermelha contendo o texto Lanche Bom e Pastelaria"
         />
-        <SearchButton />
+        <div style={{ width: '35px' }} />
       </HeaderContainer>
       {isModalOpen && (
         <Modal isOpen={isModalOpen}>

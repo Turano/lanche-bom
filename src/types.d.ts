@@ -40,6 +40,7 @@ interface ExpandItem {
   quantidade: number;
   expand: {
     item: {
+      id: string;
       nome: string;
       preco: number;
     };
@@ -53,8 +54,9 @@ export interface Info {
     itens: ExpandItem[];
   };
   created: string;
-  status: 'Em preparo' | 'Preparado' | 'Finalizado';
+  status: 'Em preparo' | 'Preparado' | 'Finalizado' | 'Cancelado';
   precoTotal: number;
+  desejaCancelar?: boolean;
 }
 
 export interface Categoria {

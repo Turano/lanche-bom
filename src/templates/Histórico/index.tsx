@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Typography } from '../../components/Typography';
 import { usePocket } from '../../contexts/api/usePocket';
 import { useCart } from '../../contexts/cart';
@@ -8,13 +9,73 @@ import {
   CardBody,
   CardFooter,
   Button,
+  ModalFooter,
+  ModalButton,
+  ModalContainer,
+  ModalHeader,
+  ModalOverlay,
+  ModalBody,
+  Loader,
 } from './styles';
+import { Info } from '../../types';
+import { useState } from 'react';
 
 export const Histórico: React.FC = () => {
-  const { state } = useCart();
+  const { state, dispatch } = useCart();
 
-  const { useHistorico } = usePocket();
-  const { data, isLoading, isError } = useHistorico(state.userId);
+  const { useHistorico, cancelarPedido } = usePocket();
+  const { data, isLoading, isError, refetch } = useHistorico(state.userId);
+
+  const [isCancelarLoading, setIsCancelarLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleCancelar = (id: string) => {
+    setIsCancelarLoading(true);
+    cancelarPedido.mutate(id, {
+      onSuccess: () => {
+        console.log('Pedido cancelado com sucesso!');
+        closeModal();
+        refetch();
+      },
+      onError: (error) => {
+        console.error('Erro ao cancelar o pedido:', error);
+        alert('Erro ao cancelar o pedido');
+      },
+      onSettled: () => {
+        setIsCancelarLoading(false);
+      },
+    });
+  };
+
+  const handleReorder = (item: Info) => {
+    dispatch({ type: 'CLEAR_CART' });
+    item.expand.itens.forEach((item) => {
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: {
+          item: item.expand.item.id,
+          quantidade: item.quantidade,
+          obs: item.obs,
+        },
+      });
+    });
+    navigate('/carrinho');
+  };
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const openModal = (id: string) => {
+    setSelectedId(id);
+    setModalOpen(true);
+    console.log(id);
+  };
+
+  const closeModal = () => {
+    setSelectedId(null);
+    setModalOpen(false);
+  };
 
   if (isLoading) {
     return <Typography>Carregando...</Typography>;
@@ -24,44 +85,88 @@ export const Histórico: React.FC = () => {
     return <Typography>Ocorreu um erro ao carregar o histórico</Typography>;
   }
 
+  const sortedData = data?.slice().sort((a, b) => {
+    return new Date(b.created).getTime() - new Date(a.created).getTime();
+  });
+
   return (
     <>
       <Typography as="h3" weight="bold" size="medium">
         Pedidos
       </Typography>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2%' }}>
-        {data?.map((item) => (
+        {sortedData?.map((item) => (
           <HistoryCard key={item.id}>
-            <CardHeader>
-              <span>{formatDate(item.created)}</span>
-              <span>{item.status}</span>
-            </CardHeader>
-
-            <CardBody>
-              {item.expand.itens.map((item, index) => (
-                <div key={index}>
-                  <p>
-                    {item.quantidade}x {item.expand.item.nome}
-                  </p>
-                  {item.obs ? <p>&emsp;-&gt; {item.obs}</p> : null}
-                </div>
-              ))}
-            </CardBody>
-
+            <div>
+              <CardHeader>
+                <span>{formatDate(item.created)}</span>
+                <span>
+                  {item.desejaCancelar &&
+                  item.status !== 'Finalizado' &&
+                  item.status !== 'Cancelado'
+                    ? 'Cancelando...'
+                    : item.status}
+                </span>
+              </CardHeader>
+              <div style={{ marginTop: '2rem' }} />
+              <CardBody>
+                {item.expand.itens.map((item, index) => (
+                  <div key={index}>
+                    <p>
+                      {item.quantidade}x {item.expand.item.nome}
+                    </p>
+                    {item.obs ? <p>&emsp;-&gt; {item.obs}</p> : null}
+                  </div>
+                ))}
+              </CardBody>
+            </div>
             <CardFooter>
               <Typography as="span" size="small">
                 R$ {item.precoTotal.toFixed(2)}
               </Typography>
               <div>
-                {item.status === 'Finalizado' ? null : (
-                  <Button>Cancelar</Button>
+                {item.status === 'Finalizado' ||
+                item.status === 'Cancelado' ||
+                item.desejaCancelar ? null : (
+                  <Button onClick={() => openModal(item.id)}>Cancelar</Button>
                 )}
 
-                <Button primary>Peça de novo</Button>
+                <Button primary onClick={() => handleReorder(item)}>
+                  Peça de novo
+                </Button>
               </div>
             </CardFooter>
           </HistoryCard>
         ))}
+
+        {/* Modal de confirmação */}
+        {isModalOpen && (
+          <ModalOverlay>
+            <ModalContainer>
+              <ModalHeader>
+                <Typography weight="bold">Confirmar Cancelamento</Typography>
+              </ModalHeader>
+              <ModalBody>
+                <Typography>
+                  Você tem certeza que deseja cancelar este pedido?
+                </Typography>
+              </ModalBody>
+              <ModalFooter>
+                <ModalButton onClick={closeModal}>
+                  <Typography>Voltar</Typography>
+                </ModalButton>
+                <ModalButton
+                  primary
+                  onClick={() => selectedId && handleCancelar(selectedId)}
+                >
+                  <Typography>
+                    {isCancelarLoading ? <Loader /> : 'Cancelar'}
+                  </Typography>
+                </ModalButton>
+              </ModalFooter>
+            </ModalContainer>
+          </ModalOverlay>
+        )}
       </div>
     </>
   );

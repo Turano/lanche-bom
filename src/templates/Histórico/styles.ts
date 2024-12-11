@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const HistoryCard = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
+  justify-content: space-between;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
@@ -77,4 +78,79 @@ export const Button = styled.button.withConfig({
   &:hover {
     opacity: 0.9;
   }
+`;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContainer = styled.div`
+  background: ${({ theme }) => theme.colors.mainBg};
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const ModalHeader = styled.div`
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+`;
+
+export const ModalBody = styled.div`
+  font-size: 1rem;
+  color: #555;
+`;
+
+export const ModalFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+`;
+
+export const ModalButton = styled.button<{ primary?: boolean }>`
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: fit-content;
+
+  background: ${({ primary, theme }) => (primary ? theme.colors.primary : theme.colors.whiterGray)};
+  color: ${({ primary, theme }) => (primary ? theme.colors.text : theme.colors.white)};
+
+`;
+
+// Animação de rotação
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+// Estilo do Loader
+export const Loader = styled.div`
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid black; /* Cor do spinner */
+  border-radius: 50%;
+  animation: ${spin} 0.6s linear infinite;
 `;

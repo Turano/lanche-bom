@@ -4,6 +4,7 @@ import { UseMutationResult, UseQueryResult } from 'react-query';
 
 // Contexto e Provider
 export interface PocketContextProps {
+  cancelarPedido: UseMutationResult<void, Error, string>;
   finalizarPedido: UseMutationResult<
     void,
     Error,
