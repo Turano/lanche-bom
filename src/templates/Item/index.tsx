@@ -116,6 +116,7 @@ export const Item = (props: ItemProps) => {
     <div
       style={{
         marginTop: '1rem',
+        marginBottom: '8rem',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
